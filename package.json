@@ -1,0 +1,31 @@
+{
+	"name": "cpp",
+	"version": "0.1.0",
+  "description": "Code concept for a \"Creative Process Management Platform\"",
+  "main": "index.js",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@next/font": "13.0.7",
+		"eslint": "8.30.0",
+		"eslint-config-next": "13.0.7",
+		"next": "13.0.7",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/marymkelly/cpp.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/marymkelly/cpp/issues"
+	},
+	"homepage": "https://github.com/marymkelly/cpp#readme"
+}
