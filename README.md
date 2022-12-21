@@ -1,2 +1,2 @@
 # cpp
-Creative Process Management Platform
+Code concept for a "Creative Process Management Platform"
