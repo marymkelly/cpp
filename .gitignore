@@ -30,4 +30,4 @@ yarn-error.log*
 
 # vercel
 .vercel
-cpmp-8eeb0-firebase-adminsdk-zk0m0-08fcedc08e.json
+/config
