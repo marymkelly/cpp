@@ -28,5 +28,8 @@
 	"bugs": {
 		"url": "https://github.com/marymkelly/cpp/issues"
 	},
-	"homepage": "https://github.com/marymkelly/cpp#readme"
+	"homepage": "https://github.com/marymkelly/cpp#readme",
+	"devDependencies": {
+		"sass": "^1.57.1"
+	}
 }
