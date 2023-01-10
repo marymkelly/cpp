@@ -22,27 +22,26 @@ body {
     min-width: 100vw;
     min-height: 100vh;
     @include flexPostition(center, center, column);
-
     .login-container {
         width: clamp(2rem, 15rem + 10vw, 100rem);
         min-height: 25vh;
         @include flexPostition(center, center, column);
-
         .login-title {
             text-align: center;
-            width: fit-content;
+            width: max(75%, 200px);
             font-size: clamp(2rem, 2rem + 2vw, 4rem);
             margin: 0 0 1.5rem 0;
             border-bottom: solid 1px black;
         }
-
         .login-btn-container {
             @include flexPostition(center, space-around, column);
             width: 100%;
-            min-height: 5rem;
-
+            min-height: 100px;
             button {
                 width: 100%;
+                border-radius: 4em;
+                min-height: 40px;
+                border: 1px solid black;
             }
         }
     }
