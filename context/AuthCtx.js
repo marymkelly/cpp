@@ -17,6 +17,8 @@ export function AuthContextProvider(props) {
 				console.log("user detected ", displayName, email, uid, "provider:", providerId);
 				setCurrentUser({ displayName, email, uid, providerId });
 				setAuthorized(true);
+				document.querySelector(".login-result-title").innerText = "Login Successful";
+				document.querySelector(".login-result-message").innerText = `Welcom back ${user.displayName}`;
 			} else {
 				console.log("no user detected");
 				setCurrentUser({});
