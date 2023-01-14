@@ -3,7 +3,6 @@ import Layout from "../components/layout/Layout";
 import { AuthContextProvider } from "../context/AuthCtx";
 import { app, analytics } from "../firebase/firebase";
 import "normalize.css"
-import "../styles/app.scss";
 import "../styles/styles.scss";
 
 export default function App({ Component, pageProps }) {

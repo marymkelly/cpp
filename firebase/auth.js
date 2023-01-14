@@ -117,6 +117,7 @@ async function signIn(prvd) {
 	const auth = getAuth(app);
 	const provider = providers[prvd].provider;
 
+	// throw new Error("There was an error with your sign in");
 	let userInfo = await signInWithPopup(auth, new provider())
 		.then((result) => ({ ...result, credential: provider.credentialFromResult(result) }))
 		.catch((error) => ({ error, credential: provider.credentialFromError(error) }));
@@ -130,9 +131,6 @@ async function signIn(prvd) {
 		if (!dbUser?.data?.user) {
 			dbUser = await createDatabaseUser(user, [userInfo.credential]);
 		}
-	} else {
-		document.querySelector(".login-result-title").innerHTML = "Error, Try Agin";
-		document.querySelector(".login-result-message").innerHTML = "Something went wrong trying to connect your Google account.";
 	}
 
 	return { ...userInfo, databaseUser: dbUser };
@@ -143,11 +141,13 @@ async function authStateListener(cb) {
 }
 
 async function signOutUser() {
-	try {
-		return await signOut(auth);
-	} catch (error) {
-		return { error };
-	}
+	const auth = getAuth(app);
+
+	return signOut(auth)
+		.then(() => {})
+		.catch((error) => {
+			return { error };
+		});
 }
 
 export { linkProviderAccount, unlinkAccount, authStateListener, signOutUser, signIn };

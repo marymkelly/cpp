@@ -3,7 +3,7 @@ import PageHead from "./PageHead";
 import { useAuthUser } from "../../lib/hooks/hooks";
 
 export default function Layout({ children }) {
-	const { authorized } = useAuthUser();
+	const { user, authorized } = useAuthUser();
 	return !authorized ? (
 		<>
 			<PageHead />
