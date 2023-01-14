@@ -1,49 +1,91 @@
 body {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 #__next {
-    max-width: 100%;
-    min-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
 }
 
 //mixins
 @mixin flexPostition($align, $justify, $direction) {
-    align-items: $align;
-    justify-content: $justify;
-    flex-direction: $direction;
-    display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  display: flex;
 }
 
 // Login page Styles
 .login-page {
-    min-width: 100vw;
-    min-height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  @include flexPostition(center, center, column);
+
+  .login-result.hide {
+    opacity: 0;
+  }
+
+
+  
+  .login-result {
+    width: clamp(2rem, 15rem + 10vw, 100rem);
+    min-height: 25vh;
     @include flexPostition(center, center, column);
+    border: 1px solid black;
 
-    .login-container {
-        width: clamp(2rem, 15rem + 10vw, 100rem);
-        min-height: 25vh;
-        @include flexPostition(center, center, column);
-
-        .login-title {
-            text-align: center;
-            width: fit-content;
-            font-size: clamp(2rem, 2rem + 2vw, 4rem);
-            margin: 0 0 1.5rem 0;
-            border-bottom: solid 1px black;
-        }
-
-        .login-btn-container {
-            @include flexPostition(center, space-around, column);
-            width: 100%;
-            min-height: 5rem;
-
-            button {
-                width: 100%;
-            }
-        }
+    .login-result-title {
+      text-align: center;
+      width: max(100%, 200px);
+      font-size: clamp(1rem, 1.5rem + 2vw, 2rem);
+      margin: 0 0 1rem 0;
     }
+
+    .login-result-message {
+      text-align: center;
+      width: max(100%, 200px);
+      font-size: clamp(0.8rem, 1rem + 2vw, 1.25rem);
+      margin: 0;
+    }
+
+    button {
+      width: 50%;
+      border-radius: 4em;
+      min-height: 40px;
+      border: 1px solid black;
+      margin-top: 20px;
+      font-size: clamp(1rem, 1.5rem + 2vw, 2rem);
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .login-container {
+    width: clamp(2rem, 15rem + 10vw, 100rem);
+    min-height: 25vh;
+    @include flexPostition(center, center, column);
+    
+    .login-title {
+      text-align: center;
+      width: max(75%, 200px);
+      font-size: clamp(2rem, 2rem + 2vw, 4rem);
+      margin: 0 0 1.5rem 0;
+      border-bottom: solid 1px black;
+    }
+    
+    .login-btn-container {
+      @include flexPostition(center, space-around, column);
+      width: 100%;
+      min-height: 100px;
+      
+      button {
+        width: 100%;
+        border-radius: 4em;
+        min-height: 40px;
+        border: 1px solid black;
+        cursor: pointer;
+      }
+    }
+  }
 }

@@ -24,6 +24,9 @@ function signInWithGooglePopup() {
 			// The AuthCredential type that was used.
 			const credential = GoogleAuthProvider.credentialFromError(error);
 
+			document.querySelector(".login-result-title").innerHTML = "Error, Try Agin";
+			document.querySelector(".login-result-message").innerHTML = "Something went wrong trying to connecet your Google account.";
+
 			// i've left in console.log for now just to easily illustrate what's happening when
 			console.log("ERROR", error, credential);
 		});
