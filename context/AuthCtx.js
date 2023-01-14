@@ -1,31 +1,48 @@
 import { createContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { authStateListener } from "../firebase/auth";
 
 const AuthContext = createContext({
-	user: null, //user.id, user.displayName, user.email, providerId
+	user: null,
 	isAuthorized: false,
 });
 
 export function AuthContextProvider(props) {
+	const router = useRouter();
 	const [currentUser, setCurrentUser] = useState({});
 	const [authorized, setAuthorized] = useState(false);
 
 	useEffect(() => {
 		authStateListener((user) => {
 			if (user) {
-				const { displayName, email, uid, providerId } = user;
-				console.log("user detected ", displayName, email, uid, "provider:", providerId);
-				setCurrentUser({ displayName, email, uid, providerId });
-				setAuthorized(true);
+				// const { displayName, email, uid, providerId } = user;
 				document.querySelector(".login-result-title").innerText = "Login Successful";
-				document.querySelector(".login-result-message").innerText = `Welcom back ${user.displayName}`;
+				document.querySelector(".login-result-message").innerText = `Welcome back ${user.displayName}`;
+
+				if (!currentUser?.uid) {
+					// console.log("user detected", user);
+					setCurrentUser(user);
+					setAuthorized(true);
+				}
 			} else {
-				console.log("no user detected");
-				setCurrentUser({});
-				setAuthorized(false);
+				if (currentUser) {
+					console.log("no user detected");
+					setCurrentUser({});
+					setAuthorized(false);
+				}
 			}
 		});
 	}, []);
+
+	useEffect(() => {
+		if (currentUser?.uid && router.pathname === "/") {
+			router.push("/dashboard");
+		}
+
+		if (!currentUser?.uid && router.pathname !== "/") {
+			router.replace("/");
+		}
+	}, [router, currentUser]);
 
 	const context = {
 		user: currentUser,

@@ -1,18 +1,19 @@
 import { useContext } from "react";
 import AuthContext from "../context/AuthCtx";
-import { signInWithGooglePopup, signOutUser } from "../firebase/auth";
+import { signIn, signOutUser, linkProviderAccount, unlinkAccount } from "../firebase/auth";
 
 export default function Home() {
 	const authCtx = useContext(AuthContext);
-	console.log(authCtx);
 
 	return (
 		<main>
-			Hello {authCtx?.user?.displayName} !
+			Hello {authCtx?.user?.name ?? authCtx?.user?.displayName}!
 			{!authCtx?.isAuthorized ? (
 				<button
-					onClick={() => {
-						signInWithGooglePopup();
+					onClick={async () => {
+						await signIn("google.com")
+							.then((res) => res)
+							.catch((err) => err);
 					}}>
 					Sign In with Google
 				</button>
@@ -25,15 +26,40 @@ export default function Home() {
 				</button>
 			)}
 			<button
-				onClick={async (e) => {
-					console.log("CLICKED", e);
-					let response = await fetch("/api/hello")
-						.then((res) => res.json())
-						.then((res) => res);
-
-					console.log("response: ", response);
+				onClick={async () => {
+					await signIn("github.com")
+						.then((res) => res)
+						.catch((err) => err);
 				}}>
-				Example click to api route
+				Sign In With Github
+			</button>
+			<button
+				onClick={async () => {
+					await linkProviderAccount("google.com")
+						.then((res) => res)
+						.catch((err) => err);
+				}}>
+				Link Google Account
+			</button>
+			<button
+				onClick={async () => {
+					await linkProviderAccount("github.com")
+						.then((res) => res)
+						.catch((err) => err);
+				}}>
+				Link Github Account
+			</button>
+			<button
+				onClick={async () => {
+					await unlinkAccount("google.com");
+				}}>
+				Unlink Github Account
+			</button>
+			<button
+				onClick={async () => {
+					await unlinkAccount("github.com");
+				}}>
+				Unlink Github Account
 			</button>
 		</main>
 	);

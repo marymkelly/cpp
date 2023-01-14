@@ -12,13 +12,16 @@
 	},
 	"dependencies": {
 		"@next/font": "13.0.7",
+		"@prisma/client": "^4.8.1",
 		"eslint": "8.30.0",
 		"eslint-config-next": "13.0.7",
 		"firebase": "^9.15.0",
+		"mongodb": "^4.13.0",
 		"next": "13.0.7",
 		"normalize.css": "^8.0.1",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"realm-web": "^2.0.0"
 	},
 	"repository": {
 		"type": "git",
@@ -31,6 +34,7 @@
 	},
 	"homepage": "https://github.com/marymkelly/cpp#readme",
 	"devDependencies": {
+		"prisma": "^4.8.1",
 		"sass": "^1.57.1"
 	}
 }

@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("PRISMA_MONGODB_URL")
+}
+
+model User {
+  id  String @id @default(auto()) @map("_id") @db.ObjectId 
+  uid String @unique
+  profile Profile?
+  meta Meta?
+  projects Project[]
+  providers ProviderData[]
+  credentials Credential[]
+  
+  @@map("user")
+}
+
+type Credential {
+  accessToken String
+  idToken String?
+  pendingToken String?
+  providerId String
+  signInMethod String?
+}
+
+type Profile {
+  uid String
+  email String
+  name String?
+  photo String?
+}
+
+model ProfileModel {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  uid String @unique
+  email String @unique
+  name String?
+  provider String?
+  photo String?
+}
+
+type ProviderData {
+  displayName String
+  email String?
+  phoneNumber String?
+  photoURL String?
+  providerId String
+  uid String 
+}
+
+type Meta {
+  created String
+  createdReadable String?
+  lastLogin String?
+  lastLoginReadable String?
+}
+
+model MetaModel {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  uid String @unique
+  created String?
+  createdReadable String?
+  lastLogin String? 
+  lastLoginReadable String?
+}
+
+model Project {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  ownerId String @db.ObjectId @unique
+  owner User @relation(fields: [ownerId], references: [id])
+  name String?
+  description String?
+  files String[]
+  team String[] 
+  logs Log[]
+
+  @@map("project")
+  @@unique([id, ownerId])
+}
+
+model Log {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String @unique @db.ObjectId
+  project Project @relation(fields: [projectId, authorId], references: [id, ownerId])
+  authorId String @unique @db.ObjectId
+  message String?
+  created DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
+  @@map("log")
+}
