@@ -15,32 +15,24 @@ export function AuthContextProvider(props) {
 	useEffect(() => {
 		authStateListener((user) => {
 			if (user) {
-				// const { displayName, email, uid, providerId } = user;
-				document.querySelector(".login-result-title").innerText = "Login Successful";
-				document.querySelector(".login-result-message").innerText = `Welcome back ${user.displayName}`;
-
-				if (!currentUser?.uid) {
-					// console.log("user detected", user);
-					setCurrentUser(user);
-					setAuthorized(true);
-				}
+				// console.log("user detected", user);
+				setCurrentUser(user);
+				setAuthorized(true);
 			} else {
-				if (currentUser) {
-					console.log("no user detected");
-					setCurrentUser({});
-					setAuthorized(false);
-				}
+				console.log("no user detected");
+				setCurrentUser({});
+				setAuthorized(false);
 			}
 		});
 	}, []);
 
 	useEffect(() => {
-		if (currentUser?.uid && router.pathname === "/") {
+		if (currentUser?.uid && router.pathname !== "/dashboard") {
 			router.push("/dashboard");
 		}
 
-		if (!currentUser?.uid && router.pathname !== "/") {
-			router.replace("/");
+		if (!currentUser?.uid && router.pathname === "/dashboard") {
+			router.push("/");
 		}
 	}, [router, currentUser]);
 

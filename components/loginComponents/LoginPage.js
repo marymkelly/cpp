@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuthContext from "../../context/AuthCtx";
-import { signInWithGooglePopup, signOutUser } from "../../firebase/auth";
+import { signIn, signOutUser } from "../../firebase/auth";
 import LoginResult from "./LoginResult";
 
 export default function LoginPage() {
@@ -17,7 +17,7 @@ export default function LoginPage() {
           {!authCtx?.isAuthorized ? (
             <button 
               onClick={() => {
-                signInWithGooglePopup();
+                signIn('google.com');
                 document.querySelector('.login-result-title').innerHTML = "Connecting to Google"
                 document.querySelector('.login-result-message').innerHTML = ""
                 document.querySelector(".login-result").classList.remove("hide")

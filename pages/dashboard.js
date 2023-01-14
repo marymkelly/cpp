@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import AuthContext from "../context/AuthCtx";
 import { getUserFromDatabase } from "../lib/user";
+import { useAuthUser } from "../lib/hooks/hooks";
 
 export default function Dashboard(props) {
-	const authCtx = useContext(AuthContext);
+	const router = useRouter();
+	const { user, authorized } = useAuthUser();
 	const [projects, setProjects] = useState([]);
 
 	useEffect(() => {
@@ -11,20 +14,17 @@ export default function Dashboard(props) {
 			let user = await getUserFromDatabase(uid).then((res) => {
 				return res.data.user;
 			});
-
 			if (user?.projects) setProjects(user.projects);
 			return user;
 		}
-
-		if (authCtx.isAuthorized) {
-			let user = authCtx.user;
+		if (authorized && user?.uid) {
 			getDatabaseUser(user.uid);
 		}
-	}, [authCtx.isAuthorized]);
+	}, [user, authorized]);
 
 	return (
 		<main>
-			<h2 className="dash-header">Dashboard</h2>
+			<h2 className='dash-header'>Dashboard</h2>
 			<ul>
 				{projects &&
 					projects?.length > 0 &&
