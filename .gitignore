@@ -27,7 +27,14 @@ yarn-error.log*
 
 # local env files
 .env*.local
+/prisma/.env
 
 # vercel
 .vercel
 /config
+
+#log files
+*.log
+
+#firebase
+.firebaserc
