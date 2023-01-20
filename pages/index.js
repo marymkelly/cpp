@@ -13,7 +13,7 @@ export default function Home() {
 	// }, [error]);
 
 	return (
-		<main>
+		<div>
 			Hello {authCtx?.user?.name ?? authCtx?.user?.displayName}!
 			{!authCtx?.isAuthorized ? (
 				<button
@@ -48,34 +48,6 @@ export default function Home() {
 				}}>
 				Sign In With Github
 			</button>
-			<button
-				onClick={async () => {
-					await linkProviderAccount("google.com")
-						.then((res) => res)
-						.catch((err) => err);
-				}}>
-				Link Google Account
-			</button>
-			<button
-				onClick={async () => {
-					await linkProviderAccount("github.com")
-						.then((res) => res)
-						.catch((err) => err);
-				}}>
-				Link Github Account
-			</button>
-			<button
-				onClick={async () => {
-					await unlinkAccount("google.com");
-				}}>
-				Unlink Github Account
-			</button>
-			<button
-				onClick={async () => {
-					await unlinkAccount("github.com");
-				}}>
-				Unlink Github Account
-			</button>
 			{error && (
 				<div>
 					<p className='error'>{error} </p>
@@ -87,6 +59,6 @@ export default function Home() {
 					</button>
 				</div>
 			)}
-		</main>
+		</div>
 	);
 }

@@ -12,7 +12,7 @@ export default function Dashboard(props) {
 	useEffect(() => {
 		async function getDatabaseUser(uid) {
 			let user = await getUserFromDatabase(uid).then((res) => {
-				return res.data.user;
+				return res.data?.user;
 			});
 			if (user?.projects) setProjects(user.projects);
 			return user;
@@ -23,7 +23,7 @@ export default function Dashboard(props) {
 	}, [user, authorized]);
 
 	return (
-		<main>
+		<div>
 			<h2 className='dash-header'>Dashboard</h2>
 			<ul>
 				{projects &&
@@ -39,6 +39,6 @@ export default function Dashboard(props) {
 						);
 					})}
 			</ul>
-		</main>
+		</div>
 	);
 }
