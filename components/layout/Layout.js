@@ -12,8 +12,11 @@ export default function Layout({ children }) {
 	) : (
 		<>
 			<PageHead />
-			<Nav />
-			{children}
+			<main>
+				{/* <Sidebar /> */}
+				<Nav />
+				{children}
+			</main>
 		</>
 	);
 }
