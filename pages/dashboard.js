@@ -12,7 +12,7 @@ export default function Dashboard(props) {
 	useEffect(() => {
 		async function getDatabaseUser(uid) {
 			let user = await getUserFromDatabase(uid).then((res) => {
-				return res.data.user;
+				return res.data?.user;
 			});
 			if (user?.projects) setProjects(user.projects);
 			return user;
