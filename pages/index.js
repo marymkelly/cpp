@@ -18,8 +18,64 @@ export default function Home() {
   // }, [error]);
 
   return (
-    <main>
-      Hello {authCtx?.user?.name ?? authCtx?.user?.displayName}!
+    <main className="login-page">
+      <div className="logo-container">
+			</div>
+			<div className='login-container'>
+				<h1 className='login-title'>LOGIN</h1>
+				<div className='login-btn-container'>
+					{authCtx?.user?.displayName}
+					{!authCtx?.isAuthorized ? (
+						<>
+							<button
+								onClick={async () => {
+									await signIn("google.com")
+										.then(() => {
+											router.push("/dashboard");
+										})
+										.catch((err) => {
+											setError(err.message);
+											return err.message;
+										});
+								}}>
+								Sign In with Google
+							</button>
+							<button
+								onClick={async () => {
+									await signIn("github.com")
+										.then(() => {
+											router.push("/dashboard");
+										})
+										.catch((err) => {
+											setError(err.message);
+											return err.message;
+										});
+								}}>
+								Sign In With GitHub
+							</button>
+						</>
+					) : (
+						<button
+							onClick={async () => {
+								signOutUser();
+							}}>
+							Sign Out
+						</button>
+					)}
+					{error && (
+						<div>
+							<p className='error'>{error} </p>
+							<button
+								onClick={() => {
+									setError();
+								}}>
+								Clear Me
+							</button>
+						</div>
+					)}
+				</div>
+			</div>
+      {/* Hello {authCtx?.user?.name ?? authCtx?.user?.displayName}!
       {!authCtx?.isAuthorized ? (
         <button
           onClick={async () => {
@@ -78,8 +134,8 @@ export default function Home() {
         onClick={async () => {
           await unlinkAccount("google.com");
         }}
-      >
-        Unlink Github Account
+      > */}
+        {/* Unlink Github Account
       </button>
       <button
         onClick={async () => {
@@ -99,7 +155,7 @@ export default function Home() {
             Clear Me
           </button>
         </div>
-      )}
+      )} */}
     </main>
   );
 }

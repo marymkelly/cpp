@@ -35,6 +35,7 @@
 	"homepage": "https://github.com/marymkelly/cpp#readme",
 	"devDependencies": {
 		"prisma": "^4.8.1",
-		"sass": "^1.57.1"
+		"sass": "^1.57.1",
+		"webpack": "^5.75.0"
 	}
 }
