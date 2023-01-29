@@ -15,5 +15,13 @@ $primary-navy: #023343;
 	primaryNavy: $primary-navy;
 }
 
+//mixins
+@mixin flexPostition($align, $justify, $direction) {
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  display: flex;
+}
+
 
 

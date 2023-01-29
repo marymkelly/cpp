@@ -41,3 +41,93 @@
 		}
 	}
 }
+
+//side bar styles
+
+//navbar layout
+.navbar-layout {
+	padding: 0;
+	margin: 0;
+	@include flexPostition(flex-start, center, row);
+
+	.side-bar {
+		min-height: 97vh;
+		width: min(320px, 100%);
+		background-color: $primary-navy;
+		position: sticky;
+		top: 0;
+		padding: 1em 1em;
+		margin: 1em;
+		border-radius: 30px;
+
+		.menu-button-container {
+			@include flexPostition(center, space-between, row);
+
+			.logo {
+				min-height: 50px;
+				width: 40%;
+				background-repeat: no-repeat;
+				background-image: url(../../public/images/saga_logo_white.svg);
+				background-position: center;
+			}
+			.sidebar-button {
+				height: 50px;
+				width: 50px;
+				background-color: rgba($logo-green-bright, 0.35);
+				border-radius: 15px;
+				@include flexPostition(flex-end, space-evenly, column);
+				padding: 0.8em;
+
+				span {
+					height: 2px;
+					width: 20px;
+					background-color: $logo-green;
+				}
+
+				span:nth-of-type(3) {
+					width: 15px;
+				}
+			}
+		}
+
+		.user-container {
+			@include flexPostition(center, space-between, row);
+			background-color: rgba($logo-green, 0.1);
+			border: 1px solid rgba($logo-green, 0.8);
+			min-height: 65px;
+			margin: 20px 0;
+			padding: 0.5em;
+			border-radius: 16px;
+			.user-content {
+				img {
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					margin-right: 10px;
+				}
+
+				@include flexPostition(center, flex-start, row);
+				width: 70%;
+				font-size: 0.85em;
+				color: $logo-white;
+			}
+		}
+		ul.list {
+			list-style: none;
+			@include flexPostition(flex-start, center, column);
+			width: 100%;
+			padding: 0.5em;
+
+			li {
+				@include flexPostition(center, center, row);
+				font-size: 1.2em;
+				color: $logo-white;
+				img {
+					width: 25px;
+					height: 25px;
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+}
