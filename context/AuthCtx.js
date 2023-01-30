@@ -27,7 +27,7 @@ export function AuthContextProvider(props) {
 	}, []);
 
 	useEffect(() => {
-		if (currentUser?.uid && router.pathname !== "/dashboard") {
+		if (currentUser?.uid && router.pathname === "/") {
 			router.push("/dashboard");
 		}
 

@@ -1,6 +1,23 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
 	reactStrictMode: true,
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "**.googleusercontent.com",
+				port: "",
+				pathname: "/**",
+			},
+			{
+				protocol: "https",
+				hostname: "**.githubusercontent.com",
+				port: "",
+				pathname: "/**",
+			},
+		],
+	},
 	env: {
 		GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
 		GOOGLE_AUTH_DOMAIN: process.env.GOOGLE_AUTH_DOMAIN,
