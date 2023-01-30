@@ -46,13 +46,13 @@ export default function Layout({ children }) {
 				</div>
 				{children}
 			</main>
-			<main className='main-wrapper'>
+			{/* <main className='main-wrapper'>
 				<div className='side-container'>{isMobile ? <MobileTabBar /> : <Sidebar />}</div>
 				<div className='main-container'>
 					<Nav />
 					{children}
 				</div>
-			</main>
+			</main> */}
 		</>
 	);
 }
