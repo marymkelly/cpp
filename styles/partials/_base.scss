@@ -1,15 +1,25 @@
-@use "variables";
+@use "sass:selector";
+@use "sass:meta";
+@use "sass:string";
+@use "sass:map";
 
 * {
 	box-sizing: border-box;
 }
 
 body,
-html {
+html,
+#__next {
 	padding: 0;
 	margin: 0;
 	font-family: "Readex Pro", sans-serif;
 	font-weight: 300;
+	width: 100%;
+	height: 100%;
+	min-width: 100vw;
+	// min-height: 100vh;
+	display: flex;
+	overflow: auto;
 }
 
 #__next {
@@ -27,14 +37,169 @@ h2 {
 	color: red;
 }
 
-// .logo-dark .primary {
-// 	color: $logo-black;
-// 	fill: $logo-black;
-// 	stroke: $logo-black;
+.logo-dark.primary,
+.logo-dark .primary {
+	color: $logo-black;
+	fill: $logo-black;
+	stroke: $logo-black;
+}
+
+.logo-light.primary,
+.logo-light .primary {
+	color: $logo-white;
+	fill: $logo-white;
+	stroke: $logo-white;
+}
+
+.logo-dark.accent,
+.logo-light.accent,
+.logo-dark .accent,
+.logo-light .accent {
+	color: $logo-green;
+	fill: $logo-green;
+	stroke: $logo-green;
+}
+
+// @debug meta.inspect("green");
+
+// @mixin testing($variable) {
+// 	@debug meta.inspect($variable);
 // }
 
-// .logo-dark .accent {
-// 	color: $logo-green;
-// 	fill: $logo-green;
-// 	stroke: $logo-green;
+// *[class*="md:"] {
+// 	color: blue;
+// }
+
+// :has(*[class*="md:"]) {
+// 	@include testing((&));
+
+// 	color: green;
+
+// 	$parent: &;
+// 	$selectors: selector.parse($parent);
+// 	@debug "Parent class: #{$parent}";
+// 	@debug "Selectors: #{$selectors}";
+// }
+
+// :has(.md) :is(*) {
+// 	color: blue;
+// }
+
+$custom-colors: (
+	logo-white: $logo-white,
+	logo-black: $logo-black,
+	logo-green: $logo-green,
+	logo-green-bright: $logo-green-bright,
+	accent-green: $accent-green,
+	primary-navy: $primary-navy,
+);
+
+@each $name, $color in $custom-colors {
+	.#{$name} {
+		color: $color;
+	}
+}
+
+$bp-names: "xs", "sm", "md", "lg", "xl", "xxl";
+
+$breakpoints: (
+	"xxs": 320px,
+	"xs": 448px,
+	"sm": 640px,
+	"md": 768px,
+	"lg": 1024,
+	"xl": 1280px,
+	"xxl": 1400px,
+);
+
+// @mixin dynamic-breakpoints($class) {
+// 	@if (string.index($class, $substring)) {
+// 	}
+// }
+
+// @mixin use-breakpoint {
+// 	$parent: &;
+// 	$bp: string.slice(#{$parent}, 2, 3);
+// 	@debug "Slice Breakpoint: #{$bp} parent= #{$parent}";
+// 	@debug "Classname: #{string.slice(#{$parent}, 5)}";
+// 	@debug "Map: #{map.get($breakpoints, $bp)}";
+// 	@debug "#{string.unquote("#{map.get($breakpoints, $bp)}")}";
+
+// 	@at-root {
+// 		@media screen and (min-width: "string.unquote(#{map.get($breakpoints, $bp)})" ) {
+// 			.test {
+// 				color: green;
+// 			}
+// 			.#{string.slice(#{$parent}, 5)} {
+// 				background-color: aqua;
+// 				// @content;
+// 			}
+
+// 			#{$parent} {
+// 				background-color: aqua;
+// 				// @content;
+// 			}
+// 		}
+// 	}
+// }
+
+// @mixin unify-parent($child, $parent) {
+// 	@at-root #{selector.unify($parent, $child)} {
+// 		@content;
+// 	}
+// }
+
+// @mixin unify-parent($child, $parent) {
+// 	@at-root #{selector.unify($parent, $child)} {
+// 		@content;
+// 	}
+// }
+
+// @mixin use-breakpoint($bp, $parent) {
+// 	@debug "Breakpoint: #{$bp}";
+// 	@debug "Parent: #{$parent}";
+
+// 	@include unify-parent("#{$bp}", "#{$parent}") {
+// 		@extend #{$parent};
+// 		@media screen and (min-width: "string.unquote(#{map.get($breakpoints, $bp)})" ) {
+// 			.test {
+// 				background-color: green;
+// 			}
+// 		}
+// 	}
+// }
+// @for $i from 1 through 3 {
+// 	ul:nth-child(3n + #{$i}) {
+// 		background-color: lighten($base-color, $i * 5%);
+// 	}
+// }
+
+// @mixin unify-parent($child) {
+// 	@at-root #{selector.unify(&, $child)} {
+// 		@content;
+// 	}
+// }
+
+@mixin dynamic-breakpoints($bp) {
+	$parent: &;
+	$selectors: selector.parse($parent);
+	$test: selector.simple-selectors($bp);
+
+	@each $breakpoint, $width in $breakpoints {
+		@if (string.index(&, "#{$breakpoint}:")) {
+		}
+
+		.icon-#{$name}:before {
+			display: inline-block;
+			font-family: "Icon Font";
+			content: $glyph;
+		}
+	}
+}
+
+// @mixin app-background($color) {
+// 	#{if(&, '&.app-background', '.app-background')} {
+// 		background-color: $color;
+// 		color: rgba(#fff, 0.75);
+// 	}
 // }

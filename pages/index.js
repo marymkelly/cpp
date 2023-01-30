@@ -50,7 +50,7 @@ export default function Home() {
 			</button>
 			{error && (
 				<div>
-					<p className='error'>{error} </p>
+					<p className='error'>{error}</p>
 					<button
 						onClick={() => {
 							setError();

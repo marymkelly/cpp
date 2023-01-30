@@ -24,7 +24,7 @@ export default function Dashboard(props) {
 
 	return (
 		<div>
-			<h2 className='dash-header'>Dashboard</h2>
+			<h2 className='dash-header md:9'>Dashboard</h2>
 			<ul>
 				{projects &&
 					projects?.length > 0 &&
