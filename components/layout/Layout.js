@@ -43,8 +43,8 @@ export default function Layout({ children }) {
 				<div className='navbar-layout'>
 					<RyanSidebar />
 					<Nav />
+					{children}
 				</div>
-				{children}
 			</main>
 			<main className='main-wrapper'>
 				<div className='side-container'>{isMobile ? <MobileTabBar /> : <Sidebar />}</div>
