@@ -1,0 +1,27 @@
+
+$logo-white: #f5fcfc;
+$logo-black: #020504;
+$logo-green: #36c7b5;
+$logo-green-bright: #00d9bf;
+$accent-green: #07f0c1;
+$primary-navy: #023343;
+
+:export {
+	logoWhite: $logo-white;
+	logoBlack: $logo-black;
+	logoGreen: $logo-green;
+	logoGreenBright: $logo-green-bright;
+	accentGreen: $accent-green;
+	primaryNavy: $primary-navy;
+}
+
+//mixins
+@mixin flexPostition($align, $justify, $direction) {
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  display: flex;
+}
+
+
+
