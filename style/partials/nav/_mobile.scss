@@ -1,0 +1,44 @@
+// MOBILE TAB BAR
+.bottom-nav-container {
+	height: auto;
+	width: 100%;
+	border: 13px solid white;
+	border-radius: 28px;
+	background-color: $primary-navy;
+	color: white;
+	padding: 12px;
+	position: relative;
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	transition: all;
+	transition-duration: 220ms;
+}
+
+.tab-container {
+	display: flex;
+	justify-content: space-evenly;
+	justify-items: center;
+	align-items: center;
+	align-content: center;
+	height: 100%;
+	width: 100%;
+	padding: 9px 0;
+
+	div.nav-link {
+		margin-bottom: 0;
+		height: 24px;
+		stroke-width: 2px;
+
+		a {
+			display: flex;
+			justify-content: center;
+			justify-items: center;
+			align-items: center;
+		}
+	}
+}
+
+.plus {
+	stroke-width: 2.4px;
+}

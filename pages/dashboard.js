@@ -88,5 +88,22 @@ export default function Dashboard(props) {
 					</ul>
 				</div>
 			</div>
+		<div>
+			<h2 className='dash-header md:9'>Dashboard</h2>
+			<ul>
+				{projects &&
+					projects?.length > 0 &&
+					projects.map((project) => {
+						return (
+							<li key={project.title}>
+								{project?.title}
+								<ul>
+									<li>{project?.description}</li>
+								</ul>
+							</li>
+						);
+					})}
+			</ul>
+		</div>
 	);
 }
