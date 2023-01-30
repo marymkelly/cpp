@@ -1,0 +1,79 @@
+
+//mixins
+@mixin flexPostition($align, $justify, $direction) {
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  display: flex;
+}
+
+// Login page Styles
+.login-page {
+  min-width: 100%;
+  min-height: 100vh;
+  @include flexPostition(center, flex-start, column);
+  color: $logo-white;
+
+  .logo-container {
+    width: min(80%, 500px);
+    min-height: 30vh;
+    background-image: url(../../public/images/saga_logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(1px 2px 1px rgb($logo-black, .2));
+    margin: 2em 0;
+  }
+
+  .login-container {
+    width: clamp(2rem, 15rem + 10vw, 100rem);
+    min-height: 30vh;
+    background-color: $primary-navy; 
+    padding: 1rem 1rem;
+    border-radius: 30px;
+    box-shadow: 2.5px 5px 0px 0px #000000;
+    @include flexPostition(center, center, column);
+
+    .login-title { 
+      color: $logo-white;
+      text-align: center;
+      width: max(50%, 175px);
+      font-size: clamp(3rem, 3.5rem - 2vw, 4rem);
+      font-weight: 200;
+      margin:0;
+      // border-bottom: solid 4px $logo-white;
+    }
+
+    p {
+      text-align: center;
+      margin: 5px;
+    }
+
+    .login-btn-container {
+      @include flexPostition(center, space-evenly, column);
+      width: 100%;
+      min-height: 125px;
+      margin-top: 20px;
+
+      button {
+        width: 100%;
+        min-height: 40px;
+        color: $logo-white;
+        font-size: clamp(0.8em, 1em + 1vw, 1.2em);
+        background-color: rgba($logo-green, 0.4);
+        border: 1px solid rgba($logo-green, 0.85);
+        border-radius: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        margin: 5px 0;
+        transition: all 0.2s ease-in-out;
+      }
+      
+      button:hover {
+        border: 1px solid rgba($logo-green, 1);
+        background-color: rgba($logo-green-bright, 1);
+      }
+
+    }
+  }
+}
