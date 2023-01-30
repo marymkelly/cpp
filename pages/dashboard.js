@@ -69,25 +69,25 @@ export default function Dashboard(props) {
 	}, [user, authorized]);
 
 	return (
-			<div className='dashboard-page'>
-				<div className='dash-container'>
-					<h2 className='dash-header'>Dashboard</h2>
-					<ul>
-						{projects &&
-							projects?.length > 0 &&
-							projects.map((project) => {
-								return (
-									<li key={project.title}>
-										{project?.title}
-										<ul>
-											<li>{project?.description}</li>
-										</ul>
-									</li>
-								);
-							})}
-					</ul>
-				</div>
-			</div>
+		// <div className='dashboard-page'>
+		// 	<div className='dash-container'>
+		// 		<h2 className='dash-header'>Dashboard</h2>
+		// 		<ul>
+		// 			{projects &&
+		// 				projects?.length > 0 &&
+		// 				projects.map((project) => {
+		// 					return (
+		// 						<li key={project.title}>
+		// 							{project?.title}
+		// 							<ul>
+		// 								<li>{project?.description}</li>
+		// 							</ul>
+		// 						</li>
+		// 					);
+		// 				})}
+		// 		</ul>
+		// 	</div>
+		// </div>
 		<div>
 			<h2 className='dash-header md:9'>Dashboard</h2>
 			<ul>
