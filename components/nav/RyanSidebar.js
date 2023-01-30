@@ -4,11 +4,17 @@ import { useAuthUser } from "../../lib/hooks/hooks";
 export default function Sidebar() {
 	const { user } = useAuthUser();
 
+	let sidebar = document.querySelector(".side-bar");
+
+
+
 	return (
 		<nav className='side-bar'>
 			<div className='menu-button-container'>
 				<div className='logo'></div>
-				<div className='sidebar-button'>
+				<div onClick={() => {
+					sidebar.classList.toggle("close")
+				}} className='sidebar-button'>
 					<span></span>
 					<span></span>
 					<span></span>
@@ -19,22 +25,22 @@ export default function Sidebar() {
 					<img src='images/profile-placeholder-img.jpeg' />
 					{user?.profile?.name ?? user?.displayName}
 				</div>
-				<img className='options-button' src='images/cog-6-tooth.png' />
+				<span className='options-button' />
 			</div>
 			<ul className='list'>
-                <li>
-                    <img src="images/House_01.png"/>
-                    Dashboard
-                </li>
-                <li>
-                    <img src="images/"/>
-                    Projects
-                </li>
-                <li>
-                    <img src="images/"/>
-                    Analytics
-                </li>
-            </ul>
+				<li>
+					<span className='dashboard' />
+					<div>Dashboard</div>
+				</li>
+				<li>
+					<span className='project' />
+					<div>Projects</div>
+				</li>
+				<li>
+					<span className='analytics' />
+					<div>Analytics</div>
+				</li>
+			</ul>
 		</nav>
 	);
 }

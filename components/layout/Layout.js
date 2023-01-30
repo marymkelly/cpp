@@ -14,11 +14,11 @@ export default function Layout({ children }) {
 		<>
 			<PageHead />
 			<main>
-				<div className="navbar-layout">
+				<div className='navbar-layout'>
 					<Sidebar />
 					<Nav />
+					{children}
 				</div>
-				{children}
 			</main>
 		</>
 	);
