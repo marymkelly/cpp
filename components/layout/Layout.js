@@ -12,7 +12,7 @@ export default function Layout({ children }) {
 
 	useEffect(() => {
 		function handleResize() {
-			if (window.visualViewport.width < 640 && !isMobile) {
+			if (window.visualViewport.width < 640) {
 				setIsMobile(true);
 			}
 
@@ -39,20 +39,20 @@ export default function Layout({ children }) {
 	) : (
 		<>
 			<PageHead />
-			<main>
+			{/* <main>
 				<div className='navbar-layout'>
 					<RyanSidebar />
 					<Nav />
 					{children}
 				</div>
-			</main>
-			{/* <main className='main-wrapper'>
+			</main> */}
+			<main className='main-wrapper'>
 				<div className='side-container'>{isMobile ? <MobileTabBar /> : <Sidebar />}</div>
 				<div className='main-container'>
 					<Nav />
 					{children}
 				</div>
-			</main> */}
+			</main>
 		</>
 	);
 }
