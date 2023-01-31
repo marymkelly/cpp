@@ -9,12 +9,13 @@ import HomeIcon from "../assets/icons/House";
 import LayersIcon from "../assets/icons/Layers";
 import BarChartIcon from "../assets/icons/Chart-Bar";
 import SagaLogo from "../assets/logo/Saga";
+import SagaLogoUpdated from "../assets/logo/SagaUpdated";
 
 export default function Sidebar() {
 	const router = useRouter();
 	const { user } = useAuthUser();
 	const [open, setOpen] = useState(false);
-	console.log('ROUTER: ', router);
+	// console.log('ROUTER: ', router);
 
 	const pages = [
 		{
@@ -43,7 +44,8 @@ export default function Sidebar() {
 				}}>
 				<MenuBarsIcon className='logo-green' />
 			</div>
-			<SagaLogo className='logo-light sidebar-logo' />
+			{/* <SagaLogo className='logo-light sidebar-logo' /> */}
+			<SagaLogoUpdated theme="dark" className='sidebar-logo-updated' />
 
 			{user ? (
 				<div className='current-user'>

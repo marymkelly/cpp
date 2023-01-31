@@ -7,7 +7,7 @@ export default function Nav() {
 	return (
 		<nav className='nav-container'>
 			<div className='user-greeting'>
-				Hello! <span className='name md:test'>{user?.profile?.name ?? user?.displayName}</span>
+				Hello! <span className='name'>{user?.profile?.name ?? user?.displayName}</span>
 			</div>
 			<button
 				className='logout-btn'
