@@ -5,6 +5,16 @@ $logo-green-bright: #00d9bf;
 $accent-green: #07f0c1;
 $primary-navy: #023343;
 
+$breakpoints: (
+	"xxs": 320px,
+	"xs": 448px,
+	"sm": 640px,
+	"md": 768px,
+	"lg": 1024px,
+	"xl": 1280px,
+	"xxl": 1400px,
+);
+
 :export {
 	logoWhite: $logo-white;
 	logoBlack: $logo-black;
@@ -16,11 +26,8 @@ $primary-navy: #023343;
 
 //mixins
 @mixin flexPostition($align, $justify, $direction) {
-  align-items: $align;
-  justify-content: $justify;
-  flex-direction: $direction;
-  display: flex;
+	align-items: $align;
+	justify-content: $justify;
+	flex-direction: $direction;
+	display: flex;
 }
-
-
-

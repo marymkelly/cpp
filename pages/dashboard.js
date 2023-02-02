@@ -55,6 +55,17 @@ export default function Dashboard(props) {
 	const { user, authorized } = useAuthUser();
 	const [projects, setProjects] = useState([]);
 
+	const testPojectData = {
+		name: "Test Project 1",
+		description: "test data for seetting up projects in db",
+		teamSize: 1,
+		type: "Personal Project",
+		role: {
+			title: "Developer & Designer",
+			description: "I did some awesome things. Bam.",
+		},
+	};
+
 	useEffect(() => {
 		async function getDatabaseUser(uid) {
 			let user = await getUserFromDatabase(uid).then((res) => {
@@ -67,6 +78,10 @@ export default function Dashboard(props) {
 			getDatabaseUser(user.uid);
 		}
 	}, [user, authorized]);
+
+	useEffect(() => {
+		// console.log("USER", user, projects);
+	}, [user, projects]);
 
 	return (
 		// <div className='dashboard-page'>
@@ -88,22 +103,56 @@ export default function Dashboard(props) {
 		// 		</ul>
 		// 	</div>
 		// </div>
-		<div>
+		<div className='dashboard-container'>
 			<h2 className='dash-header md:9'>Dashboard</h2>
-			<ul>
+			<div className='recent-projects'>
+				<h3 className='dash-subheader'>Recent Projects</h3>
+
+				<button
+					className='new-proj-btn'
+					onClick={async (e) => {
+						let req = {
+							data: testPojectData,
+							uid: user.uid,
+						};
+
+						async function createProject(data) {
+							const projectResults = await fetch(`/api/project`, {
+								method: "post",
+								body: JSON.stringify(data),
+								headers: {
+									"Content-Type": "application/json",
+								},
+							})
+								.then((r) => r.json())
+								.catch((err) => err);
+
+							return projectResults;
+						}
+
+						let createdProject = await createProject(req);
+						console.log("CREATED PROJECT?", createdProject);
+					}}>
+					<svg viewBox='-5 -5 370 240' xmlns='http://www.w3.org/2000/svg'>
+						<path d='M 20 0 L 340 0 C 350 0 360 10 360 20  L 360 210 C 360 220 350 230 340 230 L 20 230 C 10 230 0 220 0 210 L 0 20 C 0 10 10 0 20 0 Z' />
+					</svg>
+					<h5 className='btn-label'>Add New Project</h5>
+				</button>
+			</div>
+			<div>
 				{projects &&
 					projects?.length > 0 &&
-					projects.map((project) => {
+					projects.map((project, i) => {
 						return (
-							<li key={project.title}>
-								{project?.title}
+							<ul key={`${project.name}-${i}`}>
+								{project?.name}
 								<ul>
 									<li>{project?.description}</li>
 								</ul>
-							</li>
+							</ul>
 						);
 					})}
-			</ul>
+			</div>
 		</div>
 	);
 }

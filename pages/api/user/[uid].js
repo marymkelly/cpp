@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
 	if (req.method.toUpperCase() === "GET") {
 		await prisma.user
-			.findUnique({ where: { uid } })
+			.findUnique({ where: { id: uid }, include: { projects: true } })
 			.then((result) => {
 				res.status(200).json({ message: "Query Completed", data: { user: result } });
 				return;
@@ -24,11 +24,11 @@ export default async function handler(req, res) {
 				await prisma.$disconnect();
 				return;
 			});
-	} else if (req.method === "PUT") {
+	} else if (req.method.toUpperCase() === "PUT") {
 		return await prisma.user
 			.update({
 				where: {
-					uid,
+					id: uid,
 				},
 				data: req.body,
 			})
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 		await prisma.user
 			.delete({
 				where: {
-					uid,
+					id: uid,
 				},
 			})
 			.then(() => {

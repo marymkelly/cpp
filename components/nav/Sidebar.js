@@ -7,7 +7,7 @@ import CogIcon from "../assets/icons/Cog";
 import MenuBarsIcon from "../assets/icons/MenuBars";
 import HomeIcon from "../assets/icons/House";
 import LayersIcon from "../assets/icons/Layers";
-import BarChartIcon from "../assets/icons/Chart-Bar";
+import BarChartIcon from "../assets/icons/ChartBar";
 import SagaLogo from "../assets/logo/Saga";
 import SagaLogoUpdated from "../assets/logo/SagaUpdated";
 
@@ -45,12 +45,12 @@ export default function Sidebar() {
 				<MenuBarsIcon className='logo-green' />
 			</div>
 			{/* <SagaLogo className='logo-light sidebar-logo' /> */}
-			<SagaLogoUpdated theme="dark" className='sidebar-logo-updated' />
+			<SagaLogoUpdated theme='dark' className='sidebar-logo-updated' />
 
 			{user ? (
 				<div className='current-user'>
 					<div className='user-group'>
-						<Image src={user?.photoURL} alt='Profile Picture' width={44} height={44} />
+						{user.photoURL && <Image src={user?.photoURL} alt='Profile Picture' width={44} height={44} />}
 						<p>{user?.displayName}</p>
 					</div>
 					<CogIcon className='logo-green-bright cog' />

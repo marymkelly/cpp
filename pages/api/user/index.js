@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
 	if (req.method.toUpperCase() === "POST") {
-		if (!req.body?.uid || !req.body?.profile || !req.body?.meta) {
+		if (!req.body?.id || !req.body?.profile || !req.body?.auth) {
 			res.status(422).json({ message: "Invalid Data" });
 			return;
 		}

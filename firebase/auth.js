@@ -117,10 +117,10 @@ async function signIn(prvd) {
 	const auth = getAuth(app);
 	const provider = providers[prvd].provider;
 
-	// throw new Error("There was an error with your sign in");
 	let userInfo = await signInWithPopup(auth, new provider())
 		.then((result) => ({ ...result, credential: provider.credentialFromResult(result) }))
 		.catch((error) => ({ error, credential: provider.credentialFromError(error) }));
+		
 	let dbUser;
 
 	if (userInfo?.user) {
