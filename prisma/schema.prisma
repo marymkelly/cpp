@@ -8,88 +8,133 @@ datasource db {
 }
 
 model User {
-  id  String @id @default(auto()) @map("_id") @db.ObjectId 
-  uid String @unique
-  profile Profile?
-  meta Meta?
+  // id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  id       String    @id @map("_id")
+  auth     Auth
+  profile  Profile?
   projects Project[]
-  providers ProviderData[]
-  credentials Credential[]
-  
+  logs     Log[]
+
   @@map("user")
 }
 
+type Auth {
+  uid         String
+  meta        UserMeta?
+  providers   ProviderData[]
+  credentials Credential[]
+}
+
 type Credential {
-  accessToken String
-  idToken String?
+  accessToken  String
+  idToken      String?
   pendingToken String?
-  providerId String
+  providerId   String
   signInMethod String?
 }
 
 type Profile {
-  uid String
   email String
-  name String?
+  name  String?
   photo String?
+  // phone String?
 }
 
 model ProfileModel {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  uid String @unique
-  email String @unique
-  name String?
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  uid      String  @unique
+  email    String  @unique
+  name     String?
   provider String?
-  photo String?
+  photo    String?
 }
 
 type ProviderData {
   displayName String
-  email String?
+  email       String?
   phoneNumber String?
-  photoURL String?
-  providerId String
-  uid String 
+  photoURL    String?
+  providerId  String
+  uid         String
 }
 
-type Meta {
-  created String
-  createdReadable String?
-  lastLogin String?
-  lastLoginReadable String?
-}
-
-model MetaModel {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  uid String @unique
-  created String?
-  createdReadable String?
-  lastLogin String? 
+type UserMeta {
+  created           String
+  createdReadable   String?
+  lastLogin         String?
   lastLoginReadable String?
 }
 
 model Project {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  ownerId String @db.ObjectId @unique
-  owner User @relation(fields: [ownerId], references: [id])
-  name String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  ownerId     String  @unique
+  // ownerId     String  @unique @db.ObjectIdÍ
+  owner       User    @relation(fields: [ownerId], references: [id])
+  name        String
   description String?
-  files String[]
-  team String[] 
-  logs Log[]
+  category    String?
+  status      String?
+  dates       Date[]
 
-  @@map("project")
+  type     String?
+  role     Role?
+  client   Client?
+  teamSize Int?
+  // team        User[]
+  url      String?
+  files    String[]
+  tags     String[]
+  tools    String[]
+
+  logs        Log[]
+  created     DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+
   @@unique([id, ownerId])
+  @@map("project")
 }
 
 model Log {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  projectId String @unique @db.ObjectId
-  project Project @relation(fields: [projectId, authorId], references: [id, ownerId])
-  authorId String @unique @db.ObjectId
-  message String?
-  created DateTime @default(now())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  projectId   String   @unique @db.ObjectId
+  project     Project  @relation(fields: [projectId, authorId], references: [id, ownerId])
+  // authorId    String   @unique @db.ObjectId
+  authorId    String   @unique
+  author      User     @relation(fields: [authorId], references: [id])
+  title       String?
+  message     String?
+  type        String?
+  dates       Date[]
+  created     DateTime @default(now())
   lastUpdated DateTime @updatedAt
 
   @@map("log")
+}
+
+type Client {
+  name     String
+  industry String?
+  // contact
+}
+
+type Date {
+  date DateTime
+  type DateTypes
+}
+
+enum DateTypes {
+  START
+  END
+  TARGET
+}
+
+enum LogType {
+  DETAIL
+  GOAL
+  TASK
+}
+
+type Role {
+  title       String?
+  description String?
 }

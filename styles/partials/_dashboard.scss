@@ -1,4 +1,103 @@
-.dash-header {
-    margin-left: 4%;
-    margin-top: 4%;
+// .dashboard-page {
+// 	top: 70px;
+// 	width: 100%;
+// 	min-height: calc(100vh - 70px);
+// 	position: relative;
+
+// 	.dash-header {
+// 		margin-left: 6%;
+// 		margin-top: 4%;
+// 	}
+// }
+
+.dashboard-container {
+	padding-left: 4%;
+	padding-top: 4%;
+
+	.dash-header {
+		margin-top: 0;
+		// margin-left: 4%;
+		// margin-top: 4%;
+		// margin-bottom: 40px;
+		margin-bottom: 5%;
+	}
+
+	.dash-subheader {
+		color: $logo-black;
+		font-size: 20px;
+		font-weight: 500;
+		margin: 0;
+		margin-bottom: 20px;
+	}
+
+	.new-proj-btn {
+		background-color: transparent;
+		border: none;
+		width: 100%;
+		max-width: 360px;
+		height: auto;
+		aspect-ratio: 7/4.5;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
+		margin-top: 24px;
+
+		svg {
+			margin-left: -16px;
+			fill: none;
+			stroke: #d3dee1a1;
+			stroke-width: 2;
+			stroke-dasharray: 8;
+			width: 100%;
+			height: 100%;
+			stroke-linejoin: round;
+			stroke-linecap: round;
+			stroke-miterlimit: 4;
+			transition: all;
+			transition-duration: 180ms;
+		}
+
+		h5 {
+			margin-left: -6px;
+			position: absolute;
+			color: #7096a0;
+			opacity: 0.85;
+			font-family: "Readex Pro";
+			font-size: 16px;
+			font-weight: 410;
+			letter-spacing: 0.01em;
+			transition: all;
+			transition-duration: 180ms;
+		}
+
+		&:hover {
+			svg {
+				fill: #bad4db17;
+				// stroke: #d3dee1;
+				stroke: #c7dee5c8;
+				transition: all;
+				transition-duration: 200ms;
+			}
+			h5 {
+				color: #69a6b5;
+				opacity: 1;
+				font-size: 17px;
+				letter-spacing: 0;
+				font-weight: 405;
+				transition: all;
+				transition-duration: 150ms;
+			}
+		}
+	}
+}
+
+.recent-projects {
+	margin-left: 2px;
+}
+
+@media screen and (min-width: 640px) {
+	.new-proj-btn {
+		width: 50%;
+	}
 }

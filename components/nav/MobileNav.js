@@ -1,6 +1,6 @@
 import HomeIcon from "../assets/icons/House";
 import LayersIcon from "../assets/icons/Layers";
-import BarChartIcon from "../assets/icons/Chart-Bar";
+import BarChartIcon from "../assets/icons/ChartBar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import VerticalEllipsisIcon from "../assets/icons/VerticalEllipsis";

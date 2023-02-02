@@ -31,7 +31,7 @@ export function AuthContextProvider(props) {
 			router.push("/dashboard");
 		}
 
-		if (!currentUser?.uid && router.pathname === "/dashboard") {
+		if (!currentUser?.uid && router.pathname !== "/") {
 			router.push("/");
 		}
 	}, [router, currentUser]);

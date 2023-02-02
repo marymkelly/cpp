@@ -9,11 +9,12 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
+		"prisma": "npx prisma generate",
 		"sass": "sass --watch './styles/styles.scss' './styles/styles.css'"
 	},
 	"dependencies": {
 		"@next/font": "13.0.7",
-		"@prisma/client": "^4.8.1",
+		"@prisma/client": "^4.9.0",
 		"eslint": "8.30.0",
 		"eslint-config-next": "13.0.7",
 		"firebase": "^9.15.0",
@@ -35,7 +36,7 @@
 	},
 	"homepage": "https://github.com/marymkelly/cpp#readme",
 	"devDependencies": {
-		"prisma": "^4.8.1",
+		"prisma": "^4.9.0",
 		"sass": "^1.57.1",
 		"webpack": "^5.75.0"
 	}
