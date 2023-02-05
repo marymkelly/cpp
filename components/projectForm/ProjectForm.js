@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Section1 from "./Section-1";
+import Section2 from "./Section-2";
 
 export default function ProjectForm() {
 	const [project, setProjectData] = useState({
@@ -21,13 +23,24 @@ export default function ProjectForm() {
 		tools: [],
 		logs: [],
 	});
+	const [slideIndex, setSlideIndex] = useState(0);
 
+	const handlePrevSlide = () => {
+		setSlideIndex((prev) => (prev === 0 ? 1 : prev - 1))
+	}
+
+	const handleNextSlide = () => {
+		setSlideIndex((next) => (next === 1 ? 0 : next + 1))
+	}
+	
+
+	//Submit data to project data
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log("Form submitted:", project);
-		console.log(project);
 	};
 
+	//handing the input change
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 
@@ -41,6 +54,14 @@ export default function ProjectForm() {
 				...project,
 				dates: [{ ...project.dates[0], endDate: value }],
 			});
+		} else if (name === "role") {
+			setProjectData({
+				...project,
+				role: {
+					...project.role,
+					title: value
+				},
+			})
 		} else {
 			setProjectData({
 				...project,
@@ -49,50 +70,26 @@ export default function ProjectForm() {
 		}
 	};
 
-
 	return (
 		<div className='create-project-form'>
 			<h1 className='primary-navy'>New Project</h1>
 			<form onSubmit={handleSubmit}>
-				<input name='name' placeholder='Project Name *' type='text' value={project.name} onChange={handleInputChange} />
-				<input name='description' placeholder='Description' type='text' value={project.description} onChange={handleInputChange} />
-				<select name='category' value={project.category} defaultValue="" onChange={handleInputChange}>
-					<option value='' disabled={true}>
-						Catagory
-					</option>
-					<option value='work'>work</option>
-					<option value='personal'>personal</option>
-					<option value='school'>school</option>
-				</select>
-				<label className='primary-navy'>
-					Start Date
-					<input id='startDate' type='date' name='startDate' value={project.dates.startDate} onChange={handleInputChange} />
-				</label>
-				<label className='primary-navy'>
-					End Date
-					<input type='date' name='endDate' value={project.dates.endDate} onChange={handleInputChange} />
-				</label>
-				<select name='status' value={project.status} onChange={handleInputChange}>
-					<option disabled={true} value=''>
-						Status
-					</option>
-					<option value='active'>Active</option>
-					<option value='pending'>Pending</option>
-					<option value='upcoming'>upcoming</option>
-					<option value='overdue'>Overdue</option>
-					<option value='suspended'>Suspended</option>
-				</select>
-				<div className="form-card-1">
-					<span className="dots active"></span>
-					<span className="dots"></span>
-					<span className="dots"></span>
-				</div>
-				<div className="project-nav-buttons">
-					<button>Cancel</button>
-					<button>Next</button>
-				</div>
-				<input className='' type='submit' />
-			</form>
-		</div>
+				
+				{slideIndex === 0 ? (
+					 <Section1 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
+				) : (
+					<Section2 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
+				)
+				}
+			</form >
+			<div className="section-indicator">
+				<span className={`dots ${slideIndex === 0 ? "active" : ""}`}></span>
+				<span className={`dots ${slideIndex === 1 ? "active" : ""}`}></span>
+			</div>
+			<div className="project-nav-buttons">
+				<button onClick={handlePrevSlide}>Back</button>
+				<button onClick={handleNextSlide}>Next</button>
+			</div>
+		</div >
 	);
 }
