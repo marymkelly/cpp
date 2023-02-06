@@ -106,8 +106,15 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: $logo-white;
-	z-index: 100;
+	z-index: -99;
 	padding: 2%;
+	opacity: 0;
+
+	&.active{
+		opacity: 1;
+		z-index: 100;
+		transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+	}
 
 	h1 {
 		margin: auto auto 1em auto;
@@ -120,7 +127,28 @@
 		flex-direction: column;
 		justify-content: center;
 		width: 100%;
-		gap: 2em;
+
+		.slide-container {
+			width: 100%;
+			display: flex;
+			overflow: hidden;
+
+			.slide {
+				width: 0%;
+				opacity: 0;
+
+				&.active {
+					display: flex;
+					flex-direction: column;
+					gap: 2em;
+					min-width: 100%;
+					position: relative;
+					opacity: 1;
+					transition: all 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+				}
+			}
+		}
+
 
 		input,
 		select {
@@ -222,8 +250,6 @@
 			}
 
 		}
-
-
 	}
 
 	.section-indicator {
@@ -241,11 +267,13 @@
 			border-radius: 50%;
 			background-color: rgba(#879ca3, 0.5);
 			margin: 0 5px;
+			
+			&.active {
+				background-color: $logo-green-bright;
+				transition: all 6s cubic-bezier(0.33, 1, 0.68, 1);
+			}
 		}
 
-		.dots.active {
-			background-color: $logo-green-bright;
-		}
 	}
 
 	.project-nav-buttons {

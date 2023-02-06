@@ -4,7 +4,6 @@ import { AuthContextProvider } from "../context/AuthCtx";
 import { app, analytics } from "../firebase/firebase";
 import "normalize.css"
 import "../styles/styles.scss";
-import ProjectForm from '../components/projectForm/ProjectForm';
 
 export default function App({ Component, pageProps }) {
 	useEffect(() => {
@@ -14,7 +13,6 @@ export default function App({ Component, pageProps }) {
 	return (
 		<AuthContextProvider>
 			<Layout>
-				<ProjectForm />
 				<Component {...pageProps} />
 			</Layout>
 		</AuthContextProvider>

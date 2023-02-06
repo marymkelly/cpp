@@ -2,7 +2,7 @@ import { useState } from "react";
 import Section1 from "./Section-1";
 import Section2 from "./Section-2";
 
-export default function ProjectForm() {
+export default function ProjectForm(props) {
 	const [project, setProjectData] = useState({
 		ownerId: "",
 		name: "",
@@ -24,15 +24,21 @@ export default function ProjectForm() {
 		logs: [],
 	});
 	const [slideIndex, setSlideIndex] = useState(0);
+	const [error, setError] = useState(0);
 
 	const handlePrevSlide = () => {
 		setSlideIndex((prev) => (prev === 0 ? 1 : prev - 1))
 	}
 
 	const handleNextSlide = () => {
-		setSlideIndex((next) => (next === 1 ? 0 : next + 1))
+		if (project.name === "") {
+			setError(1);
+		} else {
+			setSlideIndex((next) => (next === 1 ? 0 : next + 1));
+			setError(0)
+		}
 	}
-	
+
 
 	//Submit data to project data
 	const handleSubmit = (e) => {
@@ -70,25 +76,39 @@ export default function ProjectForm() {
 		}
 	};
 
+
 	return (
-		<div className='create-project-form'>
+		<div className={`create-project-form ${props.formActive === true ? "active" : ""}`}>
 			<h1 className='primary-navy'>New Project</h1>
+			{error && (
+				<div className="error">You must give your project a name</div>
+			)}
 			<form onSubmit={handleSubmit}>
-				
-				{slideIndex === 0 ? (
-					 <Section1 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
-				) : (
-					<Section2 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
-				)
-				}
+				<div className="slide-container">
+					<div className={`slide ${slideIndex === 0 ? "active" : ""}`}>
+						<Section1 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
+					</div>
+					<div className={`slide ${slideIndex === 1 ? "active" : ""}`}>
+						<Section2 handleInputChange={handleInputChange} project={project} setProjectData={setProjectData} />
+					</div>
+				</div>
 			</form >
 			<div className="section-indicator">
 				<span className={`dots ${slideIndex === 0 ? "active" : ""}`}></span>
 				<span className={`dots ${slideIndex === 1 ? "active" : ""}`}></span>
 			</div>
 			<div className="project-nav-buttons">
-				<button onClick={handlePrevSlide}>Back</button>
-				<button onClick={handleNextSlide}>Next</button>
+				{slideIndex === 0 ? (
+					<>
+						<button onClick={props.toggleForm}>Cancel</button>
+						<button onClick={handleNextSlide}>Next</button>
+					</>
+				) : (
+					<>
+						<button onClick={handlePrevSlide}>Back</button>
+						<button onClick={handleSubmit}>Save</button>
+					</>
+				)}
 			</div>
 		</div >
 	);
