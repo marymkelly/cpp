@@ -115,10 +115,32 @@
 		transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 	}
 
-	h1 {
-		margin: auto auto 1em auto;
-		font-size: 2em;
+	.form-head-container{
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+
+		h1 {
+			margin: 0 0 0;
+			padding: 3%;
+			font-size: 2em;
+		}
+
+		button {
+			background-color: transparent;
+			border: none;
+
+			.delete-button {
+				transform: rotate(45deg);
+				width: 25px;
+				height: 25px;
+				cursor: pointer;
+			}
+		}
+		
+
 	}
+
 
 	form {
 		display: flex;
@@ -134,13 +156,16 @@
 
 			.slide {
 				width: 0%;
+				height: 0%;
 				opacity: 0;
 
 				&.active {
 					display: flex;
+					justify-content: space-evenly;
 					flex-direction: column;
 					gap: 2em;
 					min-width: 100%;
+					min-height: 100%;
 					position: relative;
 					opacity: 1;
 					transition: all 0.7s cubic-bezier(0.33, 1, 0.68, 1);
@@ -156,6 +181,8 @@
 			border-bottom: 1px solid rgba(#879ca3, 0.5);
 			color: $primary-navy;
 			font-weight: 200;
+			padding: 0.5em;
+			line-height: 1.5em;
 		}
 
 		select option[disabled] {
@@ -196,8 +223,7 @@
 
 			.tag-arrow {
 				position: absolute;
-				transform: translateY(-15px);
-				right: 10%;
+				right: 5%;
 				background-color: $logo-white;
 				border: none;
 			}
@@ -211,16 +237,26 @@
 
 				.tag-content {
 					background-color: rgba(#2d748b, 0.8);
-					width: fit-content;
+					min-width: 50px;
 					height: 20px;
-					padding: 0 5px 0 10px;
+					padding: 0 1% 0 3%;
 					border-radius: 1em;
-					margin-top: 1%;
-					margin-right: 2%;
+					margin: 2%;
 					display: flex;
-					justify-content: center;
+					justify-content: space-between;
 					align-items: center;
 					flex-direction: row;
+
+					
+					.tools {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						text-align: center;
+						font-weight: 200;
+						font-size: 1em;
+						margin-right: 5px;
+					}
 
 					.tags {
 						display: flex;
@@ -228,7 +264,7 @@
 						justify-content: center;
 						text-align: center;
 						font-weight: 200;
-						font-size: 0.8em;
+						font-size: 1em;
 						margin-right: 5px;
 					}
 

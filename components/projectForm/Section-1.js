@@ -1,5 +1,4 @@
 
-
 export default function Section1(props) {
 
 
@@ -7,7 +6,7 @@ export default function Section1(props) {
         <>
 			<input name='name' placeholder='Project Name *' type='text' value={props.project.name} onChange={props.handleInputChange} />
 			<input name='description' placeholder='Description' type='text' value={props.project.description} onChange={props.handleInputChange} />
-			<select name='category' value={props.project.category} defaultValue="" onChange={props.handleInputChange}>
+			<select name='category' value={props.project.category} onChange={props.handleInputChange}>
 				<option value='' disabled={true}>
 					Catagory
 				</option>props.

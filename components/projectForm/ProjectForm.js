@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Section1 from "./Section-1";
 import Section2 from "./Section-2";
+import Xmark from "../assets/icons/Plus";
 
 export default function ProjectForm(props) {
 	const [project, setProjectData] = useState({
@@ -79,7 +80,12 @@ export default function ProjectForm(props) {
 
 	return (
 		<div className={`create-project-form ${props.formActive === true ? "active" : ""}`}>
-			<h1 className='primary-navy'>New Project</h1>
+			<div className="form-head-container">
+				<h1 className='primary-navy'>New Project</h1>
+				<button onClick={props.toggleForm	} >
+					<Xmark className="primary-navy delete-button"/>
+				</button>
+			</div>
 			{error && (
 				<div className="error">You must give your project a name</div>
 			)}
