@@ -49,6 +49,8 @@ import AuthContext from "../context/AuthCtx";
 import { getUserFromDatabase } from "../lib/user";
 import { useAuthUser } from "../lib/hooks/hooks";
 import Sidebar from "../components/nav/RyanSidebar";
+import ProjectForm from "../components/projectForm/ProjectForm";
+import { setUserProperties } from "firebase/analytics";
 
 export default function Dashboard(props) {
 	const router = useRouter();
@@ -83,6 +85,16 @@ export default function Dashboard(props) {
 		// console.log("USER", user, projects);
 	}, [user, projects]);
 
+	const [formActive, setFormActive] = useState(false)
+
+	const toggleForm = () => {
+		if(formActive === false) {
+			setFormActive(true)
+		} else {
+			setFormActive(false)
+		}
+	}
+
 	return (
 		// <div className='dashboard-page'>
 		// 	<div className='dash-container'>
@@ -104,6 +116,7 @@ export default function Dashboard(props) {
 		// 	</div>
 		// </div>
 		<div className='dashboard-container'>
+			<ProjectForm formActive={formActive} setFormActive={setFormActive} toggleForm={toggleForm}/>
 			<h2 className='dash-header md:9'>Dashboard</h2>
 			<div className='recent-projects'>
 				<h3 className='dash-subheader'>Recent Projects</h3>
@@ -111,6 +124,7 @@ export default function Dashboard(props) {
 				<button
 					className='new-proj-btn'
 					onClick={async (e) => {
+						toggleForm()
 						let req = {
 							data: testPojectData,
 							uid: user.uid,
