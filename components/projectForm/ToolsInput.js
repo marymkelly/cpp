@@ -28,7 +28,7 @@ export default function ToolsInput(props) {
 					<button className="tag-arrow" onClick={handleAddTools}><ArrowLeft className="logo-green" /></button>
 					<div className="tag-container">
 						{props.project.tools.map((tools, index) => (
-							<div className="tag-content">
+							<div key={`tools-${index}`} className="tag-content">
 								<div className="tools">
 									{tools}
 								</div>

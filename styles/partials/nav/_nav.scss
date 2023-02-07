@@ -3,7 +3,6 @@
 	width: 100%;
 	// min-width: 320px;
 	height: 70px;
-	color: #111111;
 	padding: 10px;
 	display: flex;
 	border-bottom: 2px solid #07f0c1;
@@ -11,11 +10,13 @@
 	align-items: center;
 
 	.logout-btn {
-		height: 100%;
-		width: 120px;
+		height: 90%;
+		max-height: 44px;
+		width: 100px;
 		background-color: rgba(54, 199, 181, 0.04);
 		color: #36c7b5;
-		font-weight: 300;
+		font-weight: 500;
+		letter-spacing: 0.02em;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -26,7 +27,7 @@
 
 		&:hover {
 			background-color: rgba(7, 240, 193, 0.1);
-			font-weight: 400;
+			font-weight: 600;
 			color: #00d9bf;
 			border-color: #00d9bf;
 		}
@@ -39,6 +40,21 @@
 		.name {
 			font-weight: 400;
 			margin-left: 4px;
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		// border-bottom: 1.25px solid rgba(7, 240, 193, .8);;
+		border-bottom: hidden;
+
+		.user-greeting {
+			opacity: 0.8;
+		}
+
+		.logout-btn:hover {
+			background-color: rgba(7, 240, 193, 0.08);
+			font-weight: 500;
+			border-color: rgba(0, 217, 191, 0.6);
 		}
 	}
 }

@@ -12,7 +12,7 @@
 
 .dashboard-container {
 	padding-left: 4%;
-	padding-top: 4%;
+	padding-top: 3%;
 
 	.dash-header {
 		margin-top: 0;
@@ -23,7 +23,6 @@
 	}
 
 	.dash-subheader {
-		color: $logo-black;
 		font-size: 20px;
 		font-weight: 500;
 		margin: 0;
@@ -110,7 +109,7 @@
 	padding: 2%;
 	opacity: 0;
 
-	&.active{
+	&.active {
 		opacity: 1;
 		z-index: 100;
 		transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
@@ -148,7 +147,6 @@
 				}
 			}
 		}
-
 
 		input,
 		select {
@@ -232,7 +230,6 @@
 						font-weight: 200;
 						font-size: 0.8em;
 						margin-right: 5px;
-
 					}
 
 					button {
@@ -248,7 +245,6 @@
 					}
 				}
 			}
-
 		}
 	}
 
@@ -267,13 +263,12 @@
 			border-radius: 50%;
 			background-color: rgba(#879ca3, 0.5);
 			margin: 0 5px;
-			
+
 			&.active {
 				background-color: $logo-green-bright;
 				transition: all 6s cubic-bezier(0.33, 1, 0.68, 1);
 			}
 		}
-
 	}
 
 	.project-nav-buttons {

@@ -1,25 +1,34 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "../context/AuthCtx";
-import {
-  signIn,
-  signOutUser,
-  linkProviderAccount,
-  unlinkAccount,
-} from "../firebase/auth";
+import { signIn, signOutUser, linkProviderAccount, unlinkAccount } from "../firebase/auth";
+import SagaUpdated from "../components/assets/logo/SagaUpdated";
 
 export default function Home() {
-  const router = useRouter();
-  const authCtx = useContext(AuthContext);
-  const [error, setError] = useState();
+	const router = useRouter();
+	const authCtx = useContext(AuthContext);
+	const [error, setError] = useState();
 
-  // useEffect(() => {
-  // 	console.log("ERROR", error);
-  // }, [error]);
+	const [theme, setTheme] = useState('dark');
 
-  return (
-    <main className="login-page">
-      <div className="logo-container">
+	useEffect(() => {
+		const deviceTheme = window.matchMedia("(prefers-color-scheme:light)");
+		function handleChange(e) {
+			e.matches ? setTheme("light") : setTheme("dark");
+		}
+
+		deviceTheme.addEventListener("change", handleChange);
+
+		return () => {
+			deviceTheme.removeEventListener("change", handleChange);
+		};
+	}, [theme]);
+
+	return (
+		<main className='login-page'>
+			{/* <div className='logo-container'></div> */}
+			<div className='login-logo'>
+				<SagaUpdated theme={theme} className='login-logo__logo' />
 			</div>
 			<div className='login-container'>
 				<h1 className='login-title'>LOGIN</h1>
@@ -75,6 +84,6 @@ export default function Home() {
 					)}
 				</div>
 			</div>
-    </main>
-  );
+		</main>
+	);
 }
