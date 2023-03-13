@@ -1,27 +1,20 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../../../db/prisma";
 
 export default async function handler(req, res) {
-	const { uid } = req.query;
-
-	await prisma.$connect().catch((error) => {
-		res.status(500).json({ error });
-		return;
-	});
+	const { uid, type } = req.query;
 
 	if (req.method.toUpperCase() === "GET") {
+		if (!(uid && type))
+			return res.status(200).json({ data: { user: undefined } });
+
 		await prisma.user
-			.findUnique({ where: { id: uid }, include: { projects: true } })
+			.findUnique({ where: { [type]: uid }, include: { projects: true } })
 			.then((result) => {
 				res.status(200).json({ message: "Query Completed", data: { user: result } });
 				return;
 			})
 			.catch((error) => {
 				res.status(500).json({ message: "Database Error", error });
-				return;
-			})
-			.finally(async () => {
-				await prisma.$disconnect();
 				return;
 			});
 	} else if (req.method.toUpperCase() === "PUT") {
@@ -39,10 +32,6 @@ export default async function handler(req, res) {
 			.catch((error) => {
 				res.status(500).json({ message: "Error updating user", error });
 				return;
-			})
-			.finally(async () => {
-				await prisma.$disconnect();
-				return;
 			});
 	} else if (req.method.toUpperCase() === "DELETE") {
 		await prisma.user
@@ -58,9 +47,6 @@ export default async function handler(req, res) {
 			.catch((error) => {
 				res.status(500).json({ message: "Database Error", error });
 				return;
-			})
-			.finally(async () => {
-				await prisma.$disconnect();
 			});
 	} else {
 		res.status(405).json({ message: "Invalid Request" });

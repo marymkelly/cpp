@@ -32,6 +32,7 @@ const nextConfig = {
 		REALM_APP_ID: process.env.REALM_APP_ID,
 		GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
 		GITHUB_SECRET: process.env.GITHUB_SECRET,
+		RUN_FBE: process.env.RUN_FBE,
 	},
 };
 

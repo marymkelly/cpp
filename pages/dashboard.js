@@ -1,56 +1,11 @@
-// import { useContext, useEffect, useState } from "react";
-// import { useRouter } from "next/router";
-// import AuthContext from "../context/AuthCtx";
-// import { getUserFromDatabase } from "../lib/user";
-// import { useAuthUser } from "../lib/hooks/hooks";
-
-// export default function Dashboard(props) {
-// 	const router = useRouter();
-// 	const { user, authorized } = useAuthUser();
-// 	const [projects, setProjects] = useState([]);
-
-// 	useEffect(() => {
-// 		async function getDatabaseUser(uid) {
-// 			let user = await getUserFromDatabase(uid).then((res) => {
-// 				return res.data?.user;
-// 			});
-// 			if (user?.projects) setProjects(user.projects);
-// 			return user;
-// 		}
-// 		if (authorized && user?.uid) {
-// 			getDatabaseUser(user.uid);
-// 		}
-// 	}, [user, authorized]);
-
-// 	return (
-// 		<div>
-// 			<h2 className='dash-header'>Dashboard</h2>
-// 			<ul>
-// 				{projects &&
-// 					projects?.length > 0 &&
-// 					projects.map((project) => {
-// 						return (
-// 							<li key={project.title}>
-// 								{project?.title}
-// 								<ul>
-// 									<li>{project?.description}</li>
-// 								</ul>
-// 							</li>
-// 						);
-// 					})}
-// 			</ul>
-// 		</div>
-// 	);
-// }
-
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "../context/AuthCtx";
 import { getUserFromDatabase } from "../lib/user";
 import { useAuthUser } from "../lib/hooks/hooks";
-import Sidebar from "../components/nav/RyanSidebar";
 import ProjectForm from "../components/projectForm/ProjectForm";
 import { setUserProperties } from "firebase/analytics";
+import SquareButton from "../components/common/SquareButton"
 
 export default function Dashboard(props) {
 	const router = useRouter();
@@ -69,15 +24,16 @@ export default function Dashboard(props) {
 	};
 
 	useEffect(() => {
-		async function getDatabaseUser(uid) {
-			let user = await getUserFromDatabase(uid).then((res) => {
-				return res.data?.user;
+		async function getDatabaseUser(id) {
+			let user = await getUserFromDatabase(id, 'id').then((res) => {
+				return res
 			});
+			console.log('USER!', user)
 			if (user?.projects) setProjects(user.projects);
 			return user;
 		}
-		if (authorized && user?.uid) {
-			getDatabaseUser(user.uid);
+		if (authorized && user?.id) {
+			getDatabaseUser(user.id);
 		}
 	}, [user, authorized]);
 
@@ -127,7 +83,7 @@ export default function Dashboard(props) {
 						toggleForm()
 						let req = {
 							data: testPojectData,
-							uid: user.uid,
+							id: user.id,
 						};
 
 						async function createProject(data) {
@@ -153,6 +109,7 @@ export default function Dashboard(props) {
 					<h5 className='btn-label'>Add New Project</h5>
 				</button>
 			</div>
+			<SquareButton label="Test" inverse={true} classNames="w-[120px] py-3" />
 			<div>
 				{projects &&
 					projects?.length > 0 &&

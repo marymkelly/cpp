@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 		return;
 	}
 
-	if (!req.body?.uid || !req.body?.data?.name) {
+	if (!req.body?.id || !req.body?.data?.name) {
 		res.status(422).json({ message: "Invalid Data" });
 		return;
 	}
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 				...req.body.data,
 				owner: {
 					connect: {
-						id: req.body.uid,
+						id: req.body.id,
 					},
 				},
 			},

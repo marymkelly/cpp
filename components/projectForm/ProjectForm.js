@@ -25,7 +25,7 @@ export default function ProjectForm(props) {
 		logs: [],
 	});
 	const [slideIndex, setSlideIndex] = useState(0);
-	const [error, setError] = useState(0);
+	const [error, setError] = useState(false);
 
 	const handlePrevSlide = () => {
 		setSlideIndex((prev) => (prev === 0 ? 1 : prev - 1))
@@ -36,7 +36,7 @@ export default function ProjectForm(props) {
 			setError(1);
 		} else {
 			setSlideIndex((next) => (next === 1 ? 0 : next + 1));
-			setError(0)
+			setError(false)
 		}
 	}
 

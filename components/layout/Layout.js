@@ -1,12 +1,14 @@
 import Nav from "../nav/Nav";
 import PageHead from "./PageHead";
 import { useAuthUser } from "../../lib/hooks/hooks";
-import RyanSidebar from "../nav/RyanSidebar";
 import Sidebar from "../nav/Sidebar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import MobileTabBar from "../nav/MobileNav";
+import LoadingPage from "../LoadingPage.tsx";
+import AuthContext from "../../context/AuthCtx";
 
 export default function Layout({ children }) {
+	const authCtx = useContext(AuthContext);
 	const { user, authorized } = useAuthUser();
 	const [isMobile, setIsMobile] = useState(false);
 
@@ -31,28 +33,23 @@ export default function Layout({ children }) {
 		};
 	}, []);
 
-	return !authorized ? (
+	return (
 		<>
 			<PageHead />
-			{children}
-		</>
-	) : (
-		<>
-			<PageHead />
-			{/* <main>
-				<div className='navbar-layout'>
-					<RyanSidebar />
-					<Nav />
-					{children}
-				</div>
-			</main> */}
-			<main className='main-wrapper'>
-				<div className='side-container'>{isMobile ? <MobileTabBar /> : <Sidebar />}</div>
-				<div className='main-container'>
-					<Nav />
-					{children}
-				</div>
-			</main>
+			{authCtx.isLoading && <LoadingPage />}
+			{!authorized || !user ? (
+				children
+			) : (
+				<main className='main-wrapper'>
+					<div className='side-container'>
+						{isMobile ? <MobileTabBar /> : <Sidebar />}
+					</div>
+					<div className='main-container'>
+						<Nav />
+						<div className='mt-20'>{children}</div>
+					</div>
+				</main>
+			)}
 		</>
 	);
 }

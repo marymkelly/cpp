@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import { AuthContextProvider } from "../context/AuthCtx";
 import { app, analytics } from "../firebase/firebase";
-import "normalize.css"
+import "normalize.css";
 import "../styles/globals.css";
 import "../styles/styles.scss";
-
-
+import { ThemeContextProvider } from "../context/ThemeCtx";
 
 export default function App({ Component, pageProps }) {
 	useEffect(() => {
@@ -15,9 +14,11 @@ export default function App({ Component, pageProps }) {
 
 	return (
 		<AuthContextProvider>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<ThemeContextProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</ThemeContextProvider>
 		</AuthContextProvider>
 	);
 }

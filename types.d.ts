@@ -1,0 +1,1 @@
+/// <reference types="./lib/ts/types.ts" />

@@ -16,8 +16,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const analytics = getAnalytics;
 
-// if (process.env.NODE_ENV === "development") {
-// 	connectAuthEmulator(auth, "http://localhost:9099");
-// }
+if (process.env.NODE_ENV === "development" && process.env.RUN_FBE === "y") {
+	connectAuthEmulator(auth, "http://localhost:9099");
+}
 
 export { app, auth, analytics };
