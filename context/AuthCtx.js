@@ -29,26 +29,27 @@ export function AuthContextProvider(props) {
 					projects: dbUser?.projects ?? [],
 				});
 				setAuthorized(true);
+				setLoading(false);
 			} else {
 				console.log("no user detected");
 				setCurrentUser({});
 				setAuthorized(false);
+				setLoading(false);
 			}
 
-			setLoading(false);
+			
 		});
 	}, []);
 
 	useEffect(() => {
-		// if (!loading) {
+		if (!loading) {
 			if (currentUser?.id && router.pathname === "/") {
 				router.push("/dashboard");
 			}
-			// if (!currentUser?.id && router.pathname !== "/") {
-			// 	router.push("/");
-			// 	setLoading(false)
-			// }
-		// }
+			if (!currentUser?.id && router.pathname !== "/") {
+				router.push("/");
+			}
+		}
 	}, [router, currentUser, loading]);
 
 	function setLoadingState(bool) {

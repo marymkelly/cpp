@@ -15,7 +15,7 @@ export default function Home() {
 		<main className='login-page'>
 			<div className='login-container'>
 				<div className='login-logo'>
-					<SagaUpdated theme="light" className='login-logo__logo' />
+					<SagaUpdated theme='light' className='login-logo__logo' />
 				</div>
 				<div className='login-content'>
 					<h1 className='login-title'>Sign in</h1>
@@ -25,6 +25,7 @@ export default function Home() {
 							<>
 								<button
 									onClick={async () => {
+										authCtx.setLoading(true);
 										await signIn("google.com")
 											.then((data) => {
 												if (data?.user) {
@@ -46,6 +47,7 @@ export default function Home() {
 								</button>
 								<button
 									onClick={async () => {
+										authCtx.setLoading(true);
 										await signIn("github.com")
 											.then((data) => {
 												if (data?.user) {
