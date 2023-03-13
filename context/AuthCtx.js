@@ -35,19 +35,20 @@ export function AuthContextProvider(props) {
 				setAuthorized(false);
 			}
 
-			setLoadingState(false);
+			setLoading(false);
 		});
 	}, []);
 
 	useEffect(() => {
-		if (!loading) {
+		// if (!loading) {
 			if (currentUser?.id && router.pathname === "/") {
 				router.push("/dashboard");
 			}
-			if (!currentUser?.id && router.pathname !== "/") {
-				router.push("/");
-			}
-		}
+			// if (!currentUser?.id && router.pathname !== "/") {
+			// 	router.push("/");
+			// 	setLoading(false)
+			// }
+		// }
 	}, [router, currentUser, loading]);
 
 	function setLoadingState(bool) {
