@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ArrowLeft from "../assets/icons/ArrowLeft";
-import Xmark from "../assets/icons/ArrowLeft"
+import Xmark from "../assets/icons/Plus"
 
 export default function ToolsInput(props) {
 
@@ -16,7 +16,7 @@ export default function ToolsInput(props) {
 	}
 
 	const handleRemoveTools = (index) => {
-		setProjectData({
+		props.setProjectData({
 			...props.project,
 			tools: props.project.tools.filter((tools, i) => i !== index)
 		})
