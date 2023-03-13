@@ -1,18 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../../../db/prisma.ts";
 
 export default async function handler(req, res) {
 	if (req.method.toUpperCase() === "POST") {
-		if (!req.body?.id || !req.body?.profile || !req.body?.auth) {
-			res.status(422).json({ message: "Invalid Data" });
-			return;
-		}
-
-		await prisma.$connect().catch((error) => {
-			res.status(500).json({ error });
-			return;
-		});
-
 		return await prisma.user
 			.create({
 				data: req.body,

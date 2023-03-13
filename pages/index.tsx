@@ -1,32 +1,18 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "../context/AuthCtx";
-import { signIn, signOutUser, linkProviderAccount, unlinkAccount } from "../firebase/auth";
+import { signIn, signOutUser } from "../firebase/auth";
 import SagaUpdated from "../components/assets/logo/SagaUpdated";
+import { useTheme } from "../lib/hooks/hooks";
 
 export default function Home() {
 	const router = useRouter();
 	const authCtx = useContext(AuthContext);
 	const [error, setError] = useState();
-
-	const [theme, setTheme] = useState('dark');
-
-	useEffect(() => {
-		const deviceTheme = window.matchMedia("(prefers-color-scheme:light)");
-		function handleChange(e) {
-			e.matches ? setTheme("light") : setTheme("dark");
-		}
-
-		deviceTheme.addEventListener("change", handleChange);
-
-		return () => {
-			deviceTheme.removeEventListener("change", handleChange);
-		};
-	}, [theme]);
+	const theme = useTheme();
 
 	return (
-		<main className='login-page'>
-			{/* <div className='logo-container'></div> */}
+		<section className='login-page'>
 			<div className='login-logo'>
 				<SagaUpdated theme={theme} className='login-logo__logo' />
 			</div>
@@ -38,8 +24,17 @@ export default function Home() {
 						<>
 							<button
 								onClick={async () => {
+									authCtx.setLoading(true);
+
 									await signIn("google.com")
-										.then(() => {
+										.then((data) => {
+											if (data?.user) {
+												authCtx.setUser({
+													id: data.user.id,
+													profile: data.user.profile,
+												});
+											}
+											
 											router.push("/dashboard");
 										})
 										.catch((err) => {
@@ -51,8 +46,17 @@ export default function Home() {
 							</button>
 							<button
 								onClick={async () => {
+									authCtx.setLoading(true);
+
 									await signIn("github.com")
-										.then(() => {
+										.then((data) => {
+											if (data?.user) {
+												authCtx.setUser({
+													id: data.user.id,
+													profile: data.user.profile,
+												});
+											}
+
 											router.push("/dashboard");
 										})
 										.catch((err) => {
@@ -76,7 +80,7 @@ export default function Home() {
 							<p className='error'>{error} </p>
 							<button
 								onClick={() => {
-									setError();
+									setError(null);
 								}}>
 								Clear Me
 							</button>
@@ -84,6 +88,6 @@ export default function Home() {
 					)}
 				</div>
 			</div>
-		</main>
+		</section>
 	);
 }

@@ -10,12 +10,25 @@ import LayersIcon from "../assets/icons/Layers";
 import BarChartIcon from "../assets/icons/ChartBar";
 import SagaLogo from "../assets/logo/Saga";
 import SagaLogoUpdated from "../assets/logo/SagaUpdated";
+import twColors from "tailwindcss/colors";
 
 export default function Sidebar() {
 	const router = useRouter();
 	const { user } = useAuthUser();
 	const [open, setOpen] = useState(false);
-	// console.log('ROUTER: ', router);
+
+	const colors = [];
+
+	console.log('user ', user)
+
+	for (let [color, val] in twColors) {
+		let colorClass = "bg-";
+		if (typeof (twColors[color] === "string")) {
+			colorClass += twColors[color];
+		}
+	}
+
+	// console.log("TAILWIND COLORS", twColors);
 
 	const pages = [
 		{
@@ -50,8 +63,12 @@ export default function Sidebar() {
 			{user ? (
 				<div className='current-user'>
 					<div className='user-group'>
-						{user.photoURL && <Image src={user?.photoURL} alt='Profile Picture' width={44} height={44} />}
-						<p>{user?.displayName}</p>
+						{user?.profile?.photo ? (
+							<Image src={user?.profile?.photo} alt='Profile Picture' width={44} height={44} />
+						) : (
+							<div className='bg h-full w-full'>{}</div>
+						)}
+						<p>{user?.profile?.name?.display}</p>
 					</div>
 					<CogIcon className='logo-green-bright cog' />
 				</div>

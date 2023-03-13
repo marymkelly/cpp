@@ -7,47 +7,92 @@ datasource db {
   url      = env("PRISMA_MONGODB_URL")
 }
 
+// model User {
+//   // id       String    @id @default(auto()) @map("_id") @db.ObjectId
+//   id       String    @id @map("_id")
+//   auth     Auth
+//   profile  Profile?
+//   projects Project[]
+//   logs     Log[]
+//   @@map("user")
+// }
+
+// model User {
+//   // id       String    @id @default(auto()) @map("_id") @db.ObjectId
+//   id       String    @id @map("_id")
+//   auth     Auth
+//   profile  Profile?
+//   projects Project[]
+//   logs     Log[]
+//   meta        UserMeta?
+//   @@map("user")
+// }
+
+// type Auth {
+//   uid         String
+//   providers   ProviderData[]
+// }
+
 model User {
-  // id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  id       String    @id @map("_id")
-  auth     Auth
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  fid      String    @unique
   profile  Profile?
   projects Project[]
   logs     Log[]
+  meta     UserMeta?
 
   @@map("user")
 }
 
-type Auth {
-  uid         String
-  meta        UserMeta?
-  providers   ProviderData[]
-  credentials Credential[]
-}
-
-type Credential {
-  accessToken  String
-  idToken      String?
-  pendingToken String?
-  providerId   String
-  signInMethod String?
-}
-
 type Profile {
-  email String
-  name  String?
+  email AuthEmail[]
+  name  CompleteName
   photo String?
-  // phone String?
+  phone String?
 }
 
-model ProfileModel {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  uid      String  @unique
-  email    String  @unique
-  name     String?
-  provider String?
-  photo    String?
+type CompleteName {
+  first   String?
+  last    String?
+  display String?
 }
+
+type AuthEmail {
+  address String
+  primary Boolean?
+  verified Boolean?
+}
+
+// type Auth {
+//   uid         String
+//   meta        UserMeta?
+//   providers   ProviderData[]
+//   credentials Credential[]
+// }
+
+// type Credential {
+//   accessToken  String
+//   idToken      String?
+//   pendingToken String?
+//   providerId   String
+//   signInMethod String?
+// }
+
+// type Profile {
+//   email String
+//   name  String?
+//   photo String?
+//   phone String?
+// }
+
+// model ProfileModel {
+//   id       String  @id @default(auto()) @map("_id") @db.ObjectId
+//   uid      String  @unique
+//   email    String  @unique
+//   name     String?
+//   provider String?
+//   photo    String?
+// }
 
 type ProviderData {
   displayName String
@@ -58,16 +103,50 @@ type ProviderData {
   uid         String
 }
 
+// type UserMeta {
+//   created           String
+//   createdReadable   String?
+//   lastLogin         String?
+//   lastLoginReadable String?
+// }
+
 type UserMeta {
-  created           String
-  createdReadable   String?
-  lastLogin         String?
-  lastLoginReadable String?
+  created   String
+  lastLogin String
 }
+
+// model Project {
+//   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+//   ownerId     String  @unique
+//   // ownerId     String  @unique @db.ObjectIdÍ
+//   owner       User    @relation(fields: [ownerId], references: [id])
+//   name        String
+//   description String?
+//   category    String?
+//   status      String?
+//   dates       Date[]
+
+//   type     String?
+//   role     Role?
+//   client   Client?
+//   teamSize Int?
+//   // team        User[]
+//   url      String?
+//   files    String[]
+//   tags     String[]
+//   tools    String[]
+
+//   logs        Log[]
+//   created     DateTime @default(now())
+//   lastUpdated DateTime @updatedAt
+
+//   @@unique([id, ownerId])
+//   @@map("project")
+// }
 
 model Project {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  ownerId     String  @unique
+  ownerId     String  @db.ObjectId
   // ownerId     String  @unique @db.ObjectIdÍ
   owner       User    @relation(fields: [ownerId], references: [id])
   name        String
@@ -99,7 +178,7 @@ model Log {
   projectId   String   @unique @db.ObjectId
   project     Project  @relation(fields: [projectId, authorId], references: [id, ownerId])
   // authorId    String   @unique @db.ObjectId
-  authorId    String   @unique
+  authorId    String   @db.ObjectId
   author      User     @relation(fields: [authorId], references: [id])
   title       String?
   message     String?
@@ -110,6 +189,23 @@ model Log {
 
   @@map("log")
 }
+
+// model Log {
+//   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+//   projectId   String   @unique @db.ObjectId
+//   project     Project  @relation(fields: [projectId, authorId], references: [id, ownerId])
+//   // authorId    String   @unique @db.ObjectId
+//   authorId    String   @unique
+//   author      User     @relation(fields: [authorId], references: [id])
+//   title       String?
+//   message     String?
+//   type        String?
+//   dates       Date[]
+//   created     DateTime @default(now())
+//   lastUpdated DateTime @updatedAt
+
+//   @@map("log")
+// }
 
 type Client {
   name     String
@@ -132,6 +228,12 @@ enum LogType {
   DETAIL
   GOAL
   TASK
+}
+
+enum ProviderRole {
+  PRIMARY
+  SECONDARY
+  NULL
 }
 
 type Role {

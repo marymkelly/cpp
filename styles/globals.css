@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.dark-gradient {
+		background: linear-gradient(
+			60deg,
+			#001c26,
+			#001d27 50%,
+			#001e27 60%,
+			#001f29 90%
+		) !important;
+	}
+}

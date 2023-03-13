@@ -10,13 +10,53 @@ import {
 	deleteUser,
 	onAuthStateChanged,
 	unlink,
+	OAuthCredential,
+	User,
+	OAuthProvider,
 } from "firebase/auth";
-import { getUserFromDatabase, createDatabaseUser, updateDatabaseUser, deleteDatabaseUser } from "../lib/user";
+import { databaseUserFormat } from "../lib/ts/auth";
+import { UserModel } from "../lib/ts/models";
+import {
+	getUserFromDatabase,
+	saveDatabaseUser,
+	createDatabaseUser,
+	updateDatabaseUser,
+	deleteDatabaseUser,
+} from "../lib/user";
 import { app, auth } from "./firebase";
 
+// const providers = {
+// 	"google.com": {
+// 		provider: GoogleAuthProvider,
+// 		credential: (cred: OAuthCredential) =>
+// 			GoogleAuthProvider.credential(cred.idToken, cred.accessToken),
+// 	},
+// 	"github.com": {
+// 		provider: GithubAuthProvider,
+// 		credential: (cred: OAuthCredential) => GithubAuthProvider.credential(cred.accessToken),
+// 	},
+// };
+
+// interface Provider {
+// 	[provider: string]: {
+// 		provider: OAuthProvider,
+// 		credential: (cred: OAuthCredential):
+// 	}
+// }
+
 const providers = {
-	"google.com": { provider: GoogleAuthProvider, credential: (cred) => GoogleAuthProvider.credential(cred.idToken, cred.accessToken) },
-	"github.com": { provider: GithubAuthProvider, credential: (cred) => GithubAuthProvider.credential(cred.accessToken) },
+	"google.com": {
+		provider: GoogleAuthProvider,
+		credential: function (cred: OAuthCredential) {
+			return this.provider.credential(cred.idToken, cred.accessToken);
+		},
+	},
+	"github.com": {
+		provider: GithubAuthProvider,
+		credential: function (cred: OAuthCredential) {
+			return this.provider.credential(cred.accessToken);
+		},
+	},
 };
 
 function getCurrentUser() {
@@ -55,9 +95,11 @@ async function linkProviderAccount(prvd) {
 
 async function linkExistingAccount(cred, provider, prevUser) {
 	const auth = getAuth(app);
-	let prevDbUser = await getUserFromDatabase(prevUser.uid);
+	let prevDbUser = await getUserFromDatabase(prevUser.uid, "fid");
 	let prevProvider = providers[prevUser.providerData[0].providerId].provider;
-	let prevCredentials = providers[prevUser.providerData[0].providerId].credential(prevDbUser.data?.user?.credentials?.[0]);
+	let prevCredentials = providers[prevUser.providerData[0].providerId].credential(
+		prevDbUser.data?.user?.credentials?.[0]
+	);
 
 	let result = await signInWithCredential(auth, cred)
 		.then((result) => result)
@@ -72,7 +114,9 @@ async function linkExistingAccount(cred, provider, prevUser) {
 
 		if (currentUser) {
 			mergedUser.providerData.push(currentUser.providerData[0]);
-			await deleteDatabaseUser(currentUser.uid);
+			const dbUser = await getUserFromDatabase(currentUser.uid, "fid");
+			await deleteDatabaseUser(dbUser.id);
+			// await deleteDatabaseUser(currentUser.uid);
 		}
 
 		await deleteUser(auth.currentUser);
@@ -89,7 +133,15 @@ async function linkExistingAccount(cred, provider, prevUser) {
 				})
 				.catch((err) => ({ ...err, credential: prevProvider.credentialFromError(err) }));
 
-			if (linked?.user) linkedDbUser = await updateDatabaseUser(mergedUser, [linked.credential]);
+			if (linked?.user) {
+				const existingDbUser = await getUserFromDatabase(mergedUser?.uid, "fid");
+				const formattedUser: Partial<UserModel> = databaseUserFormat(
+					mergedUser,
+					existingDbUser
+				);
+				linkedDbUser = await saveDatabaseUser(formattedUser);
+				// linkedDbUser = await updateDatabaseUser(mergedUser, [linked.credential]);
+			}
 		}
 
 		return { ...linkedUser, databaseUser: linkedDbUser };
@@ -100,40 +152,46 @@ async function unlinkAccount(providerId) {
 	const auth = getAuth(app);
 	return unlink(auth.currentUser, providerId)
 		.then(async () => {
-			let dbUser = await getUserFromDatabase(auth.currentUser.uid)
+			let dbUser = await getUserFromDatabase(auth.currentUser.uid, "fid")
 				.then((res) => res.data.user)
 				.catch((err) => err);
 			if (dbUser?.uid) {
 				await updateDatabaseUser(
 					auth.currentUser,
-					dbUser.credentials.filter((entry) => auth.currentUser.providerData.some((provider) => provider.providerId === entry.providerId))
+					dbUser.credentials.filter((entry) =>
+						auth.currentUser.providerData.some(
+							(provider) => provider.providerId === entry.providerId
+						)
+					)
 				);
 			}
 		})
 		.catch((error) => error);
 }
 
-async function signIn(prvd) {
+export async function signIn(prvd: "google.com" | "github.com") {
 	const auth = getAuth(app);
 	const provider = providers[prvd].provider;
 
-	let userInfo = await signInWithPopup(auth, new provider())
-		.then((result) => ({ ...result, credential: provider.credentialFromResult(result) }))
+	const userInfo = await signInWithPopup(auth, new provider())
+		.then((result: any) => ({ ...result, credential: provider.credentialFromResult(result) }))
 		.catch((error) => ({ error, credential: provider.credentialFromError(error) }));
-		
-	let dbUser;
+
+	let dbUser: any;
 
 	if (userInfo?.user) {
 		const user = userInfo.user;
 
-		dbUser = await getUserFromDatabase(user?.uid);
+		dbUser = await getUserFromDatabase(user?.uid, "fid");
 
-		if (!dbUser?.data?.user) {
-			dbUser = await createDatabaseUser(user, [userInfo.credential]);
+		if (!dbUser) {
+			const formattedUser: Partial<UserModel> = databaseUserFormat(user);
+			// dbUser = await createDatabaseUser(user, [userInfo.credential]);
+			dbUser = await createDatabaseUser(formattedUser);
 		}
 	}
 
-	return { ...userInfo, databaseUser: dbUser };
+	return { ...userInfo, user: dbUser?.data?.user };
 }
 
 async function authStateListener(cb) {
@@ -150,4 +208,4 @@ async function signOutUser() {
 		});
 }
 
-export { linkProviderAccount, unlinkAccount, authStateListener, signOutUser, signIn };
+export { linkProviderAccount, unlinkAccount, authStateListener, signOutUser };
