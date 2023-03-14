@@ -14,11 +14,11 @@ export default function Section1(props) {
 				<option value='personal'>personal</option>
 				<option value='school'>school</option>
 			</select>
-			<label className='primary-navy'>
+			<label className='logo-green'>
 				Start Date
 				<input id='startDate' type='date' name='startDate' value={props.project.dates.startDate} onChange={props.handleInputChange} />
 			</label>
-			<label className='primary-navy'>
+			<label className='logo-green'>
 				End Date
 				<input type='date' name='endDate' value={props.project.dates.endDate} onChange={props.handleInputChange} />
 			</label>
