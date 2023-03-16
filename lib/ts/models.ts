@@ -64,6 +64,7 @@ export interface ProjectModel {
 	logs: LogModel[];
 	created: Date;
 	lastUpdated: Date;
+	// stages
 }
 
 export interface LogModel {
@@ -80,6 +81,13 @@ export interface LogModel {
 	lastUpdated: Date;
 }
 
+interface Stage {
+	projectId: string;
+	project: ProjectModel;
+	order: number;
+	steps: LogModel[];
+}
+
 interface DateItem {
 	date: Date;
 	type: DateTypes;
@@ -89,6 +97,29 @@ enum DateTypes {
 	START,
 	END,
 	TARGET,
+}
+
+enum StatusTypes {
+	ACTIVE,
+	PAUSED,
+	LATE,
+	COMPLETE,
+	PRIORITY,
+	CANCELLED,
+	NONE,
+}
+
+// enum ProjectTags {
+//  Priority
+// 	Upcoming,
+// 	Todo,
+// 	Future,
+// }
+
+enum LogTypes {
+	NOTE,
+	EVENT,
+	TASK,
 }
 
 // id: user.uid,

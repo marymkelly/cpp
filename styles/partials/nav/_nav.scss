@@ -11,6 +11,10 @@
 	align-items: center;
 	position: fixed;
 
+	&.proj-page {
+		border-color: rgb(143, 220, 208, .75);
+	}
+
 	.logout-btn {
 		height: 90%;
 		min-height: 40px;

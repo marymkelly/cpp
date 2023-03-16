@@ -6,9 +6,13 @@ import { useEffect, useState, useContext } from "react";
 import MobileTabBar from "../nav/MobileNav";
 import LoadingPage from "../LoadingPage.tsx";
 import AuthContext from "../../context/AuthCtx";
+import NotificationComponent from "../Notification";
+import ProjectContext from "../../context/ProjectCtx";
 
 export default function Layout({ children }) {
 	const authCtx = useContext(AuthContext);
+	const projectCtx = useContext(ProjectContext);
+	const { projectPage } = projectCtx;
 	const { user, authorized } = useAuthUser();
 	const [isMobile, setIsMobile] = useState(false);
 
@@ -46,10 +50,11 @@ export default function Layout({ children }) {
 					</div>
 					<div className='main-container'>
 						<Nav />
-						<div className='mt-20'>{children}</div>
+						<div className={`${projectPage ? "mt-20" : "mt-32"}`}>{children}</div>
 					</div>
 				</main>
 			)}
+			<NotificationComponent />
 		</>
 	);
 }

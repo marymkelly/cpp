@@ -147,7 +147,7 @@ type UserMeta {
 model Project {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   ownerId     String  @db.ObjectId
-  // ownerId     String  @unique @db.ObjectIdÍ
+  // ownerId     String  @unique @db.ObjectId
   owner       User    @relation(fields: [ownerId], references: [id])
   name        String
   description String?
@@ -182,7 +182,7 @@ model Log {
   author      User     @relation(fields: [authorId], references: [id])
   title       String?
   message     String?
-  type        String?
+  type        String[]
   dates       Date[]
   created     DateTime @default(now())
   lastUpdated DateTime @updatedAt

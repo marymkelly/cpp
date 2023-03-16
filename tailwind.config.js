@@ -22,10 +22,20 @@ module.exports = {
 					black: { text: "#141414" },
 					navy: "#023343",
 					green: {
-						"green-bright": "#00d9bf",
-						"accent-green": "#07f0c1",
-						"logo-green": "#36C7B5",
-						"darker-green": "#21AD9C"
+						bright: "#00d9bf",
+						accent: "#07f0c1",
+						logo: "#36C7B5",
+						darker: "#21AD9C",
+					},
+					gray: {
+						"input-border": "#CCd6d9",
+						"input-text": "#879CA3",
+						"blue-mid": "#7096A0",
+					},
+					red: {
+						error: "#F18E8E",
+						"error-hover": "#DA6161",
+						"dark-rust": "#B65656",
 					},
 				},
 				logo: {
@@ -41,5 +51,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("./lib/headersPlugin")],
 };

@@ -76,8 +76,26 @@ $custom-colors: (
 
 @media (prefers-color-scheme: dark) {
 	html {
-		background: linear-gradient(60deg, #001c26, #001d27 50%, #001e27 60%, #001f29 90%) !important;
+		background: linear-gradient(
+			60deg,
+			#001c26,
+			#001d27 50%,
+			#001e27 60%,
+			#001f29 90%
+		) !important;
 		background-size: contain;
 		color: $logo-white;
 	}
 }
+
+.h1 {
+	* &h1 {
+		color: green;
+	}
+}
+
+// .h3 {
+// 	& h3 {
+// 		color: blue;
+// 	}
+// }

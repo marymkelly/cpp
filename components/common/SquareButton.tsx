@@ -15,8 +15,8 @@ export default function SquareButton(props: SquareButtonProps) {
 			type={type}
 			className={combineClassNames(
 				inverse
-					? "border-[1.75px] border-logo-green/75 bright text-logo-green hover:border-custom-green-darker-green/75 hover:text-custom-green-darker-green"
-					: "bg-logo-green text-white hover:bg-custom-green-darker-green",
+					? "border-[1.75px] border-logo-green/75 bright text-logo-green hover:border-custom-green-darker/75 hover:text-custom-green-darker"
+					: "bg-logo-green text-white hover:bg-custom-green-darker",
 				"my-1 inline-flex min-h-[40px] items-center justify-center px-4 py-1 font-semibold tracking-wide",
 				classNames
 			)}>
