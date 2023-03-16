@@ -19,6 +19,7 @@
 		"runcli": "./cli.js"
 	},
 	"dependencies": {
+		"@heroicons/react": "^2.0.16",
 		"@next/font": "13.0.7",
 		"@prisma/client": "^4.11.0",
 		"axios": "^1.3.3",
@@ -30,7 +31,8 @@
 		"normalize.css": "^8.0.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"realm-web": "^2.0.0"
+		"realm-web": "^2.0.0",
+		"swr": "^2.1.0"
 	},
 	"repository": {
 		"type": "git",

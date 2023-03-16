@@ -8,6 +8,7 @@ import MenuBarsIcon from "../assets/icons/MenuBars";
 import HomeIcon from "../assets/icons/House";
 import LayersIcon from "../assets/icons/Layers";
 import BarChartIcon from "../assets/icons/ChartBar";
+import NotebookIcon from "../assets/icons/Notebook";
 import SagaLogo from "../assets/logo/Saga";
 import SagaLogoUpdated from "../assets/logo/SagaUpdated";
 import twColors from "tailwindcss/colors";
@@ -17,16 +18,14 @@ export default function Sidebar() {
 	const { user } = useAuthUser();
 	const [open, setOpen] = useState(false);
 
-	const colors = [];
+	// const colors = [];
 
-	console.log('user ', user)
-
-	for (let [color, val] in twColors) {
-		let colorClass = "bg-";
-		if (typeof (twColors[color] === "string")) {
-			colorClass += twColors[color];
-		}
-	}
+	// for (let [color, val] in twColors) {
+	// 	let colorClass = "bg-";
+	// 	if (typeof (twColors[color] === "string")) {
+	// 		colorClass += twColors[color];
+	// 	}
+	// }
 
 	// console.log("TAILWIND COLORS", twColors);
 
@@ -46,6 +45,11 @@ export default function Sidebar() {
 			href: "/analytics",
 			icon: BarChartIcon,
 		},
+		{
+			name: "Notes",
+			href: "/notes",
+			icon: NotebookIcon,
+		},
 	];
 
 	return (
@@ -64,7 +68,12 @@ export default function Sidebar() {
 				<div className='current-user'>
 					<div className='user-group'>
 						{user?.profile?.photo ? (
-							<Image src={user?.profile?.photo} alt='Profile Picture' width={44} height={44} />
+							<Image
+								src={user?.profile?.photo}
+								alt='Profile Picture'
+								width={44}
+								height={44}
+							/>
 						) : (
 							<div className='bg h-full w-full'>{}</div>
 						)}
@@ -77,7 +86,11 @@ export default function Sidebar() {
 			<div className='links-container'>
 				{pages.map((page, i) => {
 					return (
-						<div key={`page-${i}`} className={`${router.pathname === page.href ? "nav-link active" : "nav-link"} ${open ? "open" : ""}`}>
+						<div
+							key={`page-${i}`}
+							className={`${
+								router.pathname === page.href ? "nav-link active" : "nav-link"
+							} ${open ? "open" : ""}`}>
 							<Link href={page.href}>
 								<span>
 									<page.icon className={open ? "open" : ""} />

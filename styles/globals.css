@@ -13,3 +13,12 @@
 		) !important;
 	}
 }
+
+
+::-webkit-calendar-picker-indicator {
+	color: red;
+}
+
+/* input::-webkit-calendar-picker-indicator{
+    color: red;
+} */
