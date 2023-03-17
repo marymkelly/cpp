@@ -12,8 +12,10 @@ export default function ProjectPage() {
 		const pid = router.query.pid;
 
 		if (!loading) {
-			const validProj = user.projects.find((p) => p.id === pid);
-			if (validProj) setData(validProj);
+			if (user?.projects) {
+				const validProj = user.projects.find((p) => p.id === pid);
+				if (validProj) setData(validProj);
+			}
 		}
 	}, [loading, user, authorized]);
 
@@ -43,7 +45,9 @@ export default function ProjectPage() {
 					{data?.dates?.length > 0 ? (
 						data.dates.map((date, i) => {
 							return (
-								<div key={`dates-${i}`} className='mb-4 flex items-center align-baseline'>
+								<div
+									key={`dates-${i}`}
+									className='mb-4 flex items-center align-baseline'>
 									<h4 className='min-w-[120px] font-medium text-[#075B77]/80'>
 										{date?.type}
 									</h4>
